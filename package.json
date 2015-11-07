@@ -1,0 +1,44 @@
+{
+  "name": "data-trainer",
+  "version": "1.0.0",
+  "description": "Application for planning and tracking workouts",
+  "main": "index.js",
+  "scripts": {
+    "test": "hello"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(none)"
+  },
+  "dependencies": {
+    "backbone": "^1.1.2",
+    "brace-expansion": "^1.1.0",
+    "broccoli": "^0.15.0",
+    "broccoli-browserify": "^0.1.0",
+    "broccoli-cjsx": "0.0.2",
+    "broccoli-cli": "^1.0.0",
+    "broccoli-coffee": "^0.4.0",
+    "broccoli-merge-trees": "^0.2.1",
+    "broccoli-sass": "^0.6.2",
+    "broccoli-static-compiler": "^0.2.1",
+    "cordova": "^4.3.0",
+    "grunt-cli": "^0.1.13",
+    "material-ui": "^0.13.1",
+    "node-sass": "^2.0.1",
+    "promise": "^6.1.0",
+    "promise.coffee": "^1.0.6",
+    "react": "^0.14.0"
+  },
+  "keywords": [
+    "fitness",
+    "workout",
+    "set",
+    "rep",
+    "weight"
+  ],
+  "author": "Tyler Markvluwer",
+  "license": "ISC",
+  "devDependencies": {
+    "broccoli": "^0.15.4"
+  }
+}
