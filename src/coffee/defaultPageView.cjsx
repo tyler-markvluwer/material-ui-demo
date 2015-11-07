@@ -23,7 +23,7 @@ defaultPageView = React.createClass
         <div className="container">
             <div className="row" style={'height':'40%'}>
                 <div className='col-sm-6'>
-                    <RouletteView model={@props.model} onStop={@showSnack} />
+                    Roulette goes here
                 </div>
                 <div className='col-sm-6'>
                     <br></br>
