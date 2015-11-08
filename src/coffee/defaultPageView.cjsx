@@ -30,12 +30,8 @@ defaultPageView = React.createClass
             <br />  
             <div className="container">
                 <div className="row" style={'height':'40%'}>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-12'>
                         Roulette goes here
-                    </div>
-                    <div className='col-sm-6'>
-                        <br></br>
-                        <RaisedButton label="Spin!" onClick={@spinRoulette}/>
                     </div>
                 </div>
                 <div className="row" style={'height':'40%', 'overflow':'auto'}>
@@ -47,6 +43,16 @@ defaultPageView = React.createClass
                     </List>
                 </div>
             </div>
+
+            <footer style={'height': '40px'}>
+                <RaisedButton
+                    label="Spin!"
+                    fullWidth=true
+                    primary=true
+                    onClick={@spinRoulette}
+                    style={'height': '100%'}
+                />
+            </footer>
         </div>
 
 module.exports = React.createFactory(defaultPageView)
