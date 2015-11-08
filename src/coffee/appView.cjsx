@@ -1,10 +1,11 @@
 React = require('react')
 DefaultPageView = require('./defaultPageView')
 SpinnerTileView = require('./spinnerTileView')
+SpinnerEditView = require('./spinnerEditView')
 Globals = require('./globals')
 
 Mui = require('material-ui')
-{AppBar, MenuItem, FlatButton, RaisedButton, LeftNav, Snackbar} = require('material-ui')
+{MenuItem, LeftNav, Snackbar} = require('material-ui')
 
 List = require('material-ui/lib/lists/list')
 ListItem = require('material-ui/lib/lists/list-item')
@@ -13,9 +14,9 @@ NavigationClose = require('material-ui/lib/svg-icons/navigation/close')
 MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
 
 menuItems = [
-    { route: 'get-started', text: 'Get Started'},
-    { route: 'customization', text: 'Customization' },
-    { route: 'components', text: 'Components' },
+    { route: 'get-started', text: 'Spin!'},
+    { route: 'customization', text: 'View All' },
+    { route: 'components', text: 'Edit Spinner' },
     { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
     {
        type: MenuItem.Types.LINK,
@@ -72,24 +73,28 @@ appView = React.createClass
         switch index
             when 0 then @props.model.set_cur_view("SPINNER_MAIN") # TODO fix hardcode
             when 1 then @props.model.set_cur_view("SPINNER_SELECT") # TODO fix hardcode
-            when 2 then console.log "Components"
+            when 2 then @props.model.set_cur_view("SPINNER_EDIT") # TODO fix hardcode
             else alert("error, unknown index in leftNav")
-
-        console.log index
-        console.log menuItem
-        console.log "doing stuff"
 
     render: ->
         <div className='app-div' id='awesome-441-app-div'>
-             <AppBar
-                title="Shuffle-It"
-                iconElementRight={<FlatButton label="Save" />} 
-                onLeftIconButtonTouchTap={@toggleLeft}/>
-            <br />  
-
             {switch @props.model.get_curr_view()
-                when "SPINNER_MAIN" then <DefaultPageView model={@props.model} snack_show={@showSnack} />
-                when "SPINNER_SELECT" then <SpinnerTileView model={@props.model} />
+                when "SPINNER_MAIN"
+                    <DefaultPageView
+                        model={@props.model}
+                        snack_show={@showSnack}
+                        toggleLeft={@toggleLeft}
+                    />
+                when "SPINNER_SELECT"
+                    <SpinnerTileView
+                        model={@props.model}
+                        toggleLeft={@toggleLeft}
+                    />
+                when "SPINNER_EDIT"
+                    <SpinnerEditView
+                        model={@props.model}
+                        toggleLeft={@toggleLeft}
+                    />
                 else alert("error, unknown current view")
             }
             <LeftNav ref="leftNav" docked={false} menuItems={menuItems} onChange={@menuOnChange} />

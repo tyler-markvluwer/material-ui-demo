@@ -1,14 +1,33 @@
+Tile = require('./tile')
+EventEmitter = require('events').EventEmitter # used to tell UI when to update
 
-class Roulette
-	constructor: (@name) ->
-		@tiles = []
-		
-	add_tile: (tile) ->
-		@tiles.push tile
 
-	remove_tile: (index) ->
+class Roulette extends EventEmitter
+    constructor: (@name) ->
+        @tiles = []
 
-	get_tiles: () ->
-		return @tiles
+    force_emit: () ->
+        console.log 'roulette force emit'
+        @emit 'toggle'
+
+    add_tile: (text, img) ->
+        tile = new Tile(text, img)
+        @tiles.push tile
+        tile.on 'tile-toggle', @force_emit
+
+    cover_photo_url: () ->
+        return @tiles[0].img
+
+    remove_tile: (index) ->
+
+    get_tiles: () ->
+        return @tiles
+
+    get_active_tiles: () ->
+        return @tiles
+
+    get_inactive_tiles: () ->
+        return @tiles
+
 
 module.exports = Roulette

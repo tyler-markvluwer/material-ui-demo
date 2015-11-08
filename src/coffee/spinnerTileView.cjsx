@@ -1,21 +1,7 @@
 React = require('react')
-CounterView = require('./counterView')
-Mui = require('material-ui')
-{GridList, GridTile, IconButton} = require('material-ui')
+{AppBar, FlatButton, GridList, GridTile, IconButton} = require('material-ui')
 StarBorder = require('material-ui/lib/svg-icons/toggle/star-border')
-
-List = require('material-ui/lib/lists/list')
-ListItem = require('material-ui/lib/lists/list-item')
-ListDivider = require('material-ui/lib/lists/list-divider')
-Colors = require('material-ui/lib/styles/colors')
-NavigationClose = require('material-ui/lib/svg-icons/navigation/close')
-MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
-
-tilesData = [
-    {'title': 'a', 'author': 'tmark', 'img': 'http://material-ui.com/images/grid-list/00-52-29-429_640.jpg'},
-    {'title': 'b', 'author': 'tmarkv', 'img': 'http://material-ui.com/images/grid-list/00-52-29-429_640.jpg'},
-    {'title': 'c', 'author': 'tmarkvl', 'img': 'http://material-ui.com/images/grid-list/00-52-29-429_640.jpg'},
-]
+AddCircle = require('material-ui/lib/svg-icons/content/add')
 
 spinnerTileView = React.createClass    
     #################################
@@ -27,19 +13,31 @@ spinnerTileView = React.createClass
     update: ->
         @forceUpdate()
 
+    activateRoulette: (name) ->
+        @props.model.set_curr_roulette(name)
+        @props.model.set_cur_view("SPINNER_MAIN")
+
     render: ->
-        <div className='container' id='spinner-tile-div'>
+        <div>
+            <AppBar
+                title='All Spinners'
+                iconElementRight={<IconButton><AddCircle /></IconButton>}
+                onLeftIconButtonTouchTap={@props.toggleLeft}
+            />
+            <br />  
+
             <GridList
                 cellHeight={200}
-                style={{width: '100%', height: 410, overflowY: 'auto'}}
+                style={{width: '100.%', height: 410, overflowY: 'auto'}}
             >
-            {for tile in tilesData
+            {for roul in @props.model.get_roulettes()
                 <GridTile
-                    title={tile.title}
-                    subtitle={<span>by <b>{tile.author}</b></span>}
+                    title={roul.name}
+                    subtitle={<span>by <b>author_here</b></span>}
                     actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
+                    onClick={@activateRoulette.bind(this, roul.name)}
                 >
-                <img src={tile.img} /></GridTile>
+                <img src={roul.cover_photo_url()} /></GridTile>
             }
             </GridList>
         </div>
