@@ -24,10 +24,9 @@ class Roulette extends EventEmitter
         return @tiles
 
     get_active_tiles: () ->
-        return @tiles
+        return (tile for tile in @tiles when tile.active)
 
     get_inactive_tiles: () ->
-        return @tiles
-
+        return (tile for tile in @tiles when not tile.active)
 
 module.exports = Roulette

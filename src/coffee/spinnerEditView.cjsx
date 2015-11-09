@@ -1,9 +1,10 @@
 React = require('react')
-{AppBar, Checkbox, IconMenu, IconButton, FlatButton, RaisedButton, ListDivider, List, ListItem, Snackbar} = require('material-ui')
+{AppBar, Checkbox, IconMenu, TextField, IconButton, FlatButton, RaisedButton, ListDivider, List, ListItem, Snackbar} = require('material-ui')
 
 MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
 MenuItem = require('material-ui/lib/menus/menu-item');
+Colors = require('material-ui/lib/styles/colors')
 
 menuItems = [
     {primaryText: 'item 1', index: 1},
@@ -20,6 +21,25 @@ spinnerEditView = React.createClass
     update: ->
         @forceUpdate()
 
+    getInitialState: ->
+        {
+            tileInput: ''
+        }
+
+    storeInput: () ->
+        inputVal = @refs.tileInput.getValue()
+        @state.tileInput = inputVal
+        @update()
+        console.log @state
+
+    addTile: () ->
+        if @state.tileInput.length
+            @props.model.get_curr_roulette().add_tile(@state.tileInput, null)
+            console.log @props.model.get_curr_roulette()
+            @state.tileInput = ''
+            @refs.tileInput.clearValue()
+            @update()
+
     render: ->
         <div>
             <AppBar
@@ -29,18 +49,38 @@ spinnerEditView = React.createClass
             />
             <br />  
             <div className='container' id='spinner-tile-div'>
+                <div className='row'>
+                    <div className='col-sm-3'>
+                        <TextField
+                            ref='tileInput'
+                            hintText="e.g. Pizza"
+                            floatingLabelText="Add New Tile"
+                            onChange={@storeInput}
+                            onEnterKeyDown={@addTile}
+                        />
+                    </div>
+                    <div className='col-sm-3'>
+                        <RaisedButton
+                            label="Add"
+                            onClick={@addTile}
+                            primary={true} />
+                    </div>
+                </div>
                 <List subheader="Active Tiles">
                     <ListDivider />
+                    {if @state.tileInput.length
+                        <ListItem
+                            style={{color:Colors.amber900}}
+                            primaryText={@state.tileInput}
+                            disabled=true
+
+                        />
+                    }
                     {for tile in @props.model.get_curr_roulette().get_tiles()
                         if tile.active
                             <ListItem
                                 primaryText={tile.text}
-                                onClick={@props.model.set_curr_roulette.bind(this, tile.text)}
-                                leftCheckbox={
-                                    <Checkbox
-                                        onCheck={tile.toggleActive}
-                                    />
-                                }
+                                onClick={tile.toggleActive}
                                 rightIconButton={
                                     <IconMenu
                                         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
