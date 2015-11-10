@@ -90,7 +90,7 @@ spinnerNewView = React.createClass
                         @getImages()
                         console.log @state.img_terms
                 @state.most_recent_action = new Date()
-            , 2000)
+            , 1500)
         
 
     selectImage: (imgUrl) ->

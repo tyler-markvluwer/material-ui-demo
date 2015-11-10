@@ -2,9 +2,10 @@
 	<head>
 		<meta charset="utf-8">
   		<meta name="viewport" content="width=device-width, initial-scale=1">
-  		<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+  		<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
 
-  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> <!-- Needed for color animations -->
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
 
   		<uses-permission android:name="android.permission.BROADCAST_STICKY" />
@@ -21,4 +22,18 @@
     <script src='roulette.min.js'></script>
     <script src="js/bundle.js"></script> <!-- Needed to use the contents of the coffeescript files -->
   </body>
+  <style type="text/css">
+    .circle-spacer {
+      height: 30%;
+    }
+
+    .row-xs-flex-center {
+      display: flex;
+      align-items: center;
+    }
+    .center-block {
+      display: table;
+      margin: 0 auto;
+    }
+  </style>
 </html>
