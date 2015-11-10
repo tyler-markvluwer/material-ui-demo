@@ -129,7 +129,7 @@ spinnerNewView = React.createClass
 
             <GridList
                 cellHeight={200}
-                style={{width: '100%', height: '80%', overflowY: 'auto'}}
+                style={{width: '100%', overflowY: 'auto'}}
             >
             {for img in @state.imgs
                 if img != @state.saved_img

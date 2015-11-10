@@ -30,11 +30,9 @@ spinnerTileView = React.createClass
                 iconElementRight={<PlusButton click={@addSpinner} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
             />
-            <br />
-
             <GridList
                 cellHeight={200}
-                style={{width: '100.%', height: 410, overflowY: 'auto'}}
+                style={{width: '100%', overflowY: 'auto', marginLeft: '0px'}}
             >
             {for roul in @props.model.get_roulettes()
                 <GridTile
