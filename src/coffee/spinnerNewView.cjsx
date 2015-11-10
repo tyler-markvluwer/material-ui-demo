@@ -57,6 +57,7 @@ spinnerNewView = React.createClass
         return url
 
     getImages: () ->
+        console.log "getting imgs"
         @state.imgs = []
         $.ajax(
             url: @getApiUrl()
@@ -70,19 +71,27 @@ spinnerNewView = React.createClass
                 @state.imgs.push src
             )
         ).then(() =>
+            
             @update()
         )
 
+    secDiff: (time1, time2) ->
+        return (time1.getTime() - time2.getTime()) / 1000
+
     _storeValue: () ->
         now = new Date()
-        sec_diff = (now.getTime() - @state.most_recent_action.getTime()) / 1000
 
         # if sec_diff > 2
-        @state.imgs = []
         @state.img_terms = @refs.imageTerms.getValue()
-        if @state.img_terms.length
-            @getImages()
-            console.log @state.img_terms
+        setTimeout(
+            () =>
+                if @secDiff(new Date(), @state.most_recent_action) > 1
+                    if @state.img_terms.length
+                        @getImages()
+                        console.log @state.img_terms
+                @state.most_recent_action = new Date()
+            , 2000)
+        
 
     selectImage: (imgUrl) ->
         @state.saved_img = imgUrl

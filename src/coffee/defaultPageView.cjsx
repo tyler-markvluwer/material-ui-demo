@@ -4,6 +4,7 @@ PlusButton = require('./plusButton')
 {AppBar, FlatButton, Dialog, RaisedButton, ActionGrade, ListDivider, List, ListItem, Paper, IconButton, Snackbar} = require('material-ui')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
 StarIcon = require('material-ui/lib/svg-icons/action/grade')
+Colors = require('material-ui/lib/styles/colors')
 
 FADE_OUT_TIME = 1000
 FADE_IN_TIME = 3000
@@ -24,6 +25,22 @@ defaultPageView = React.createClass
             current_tile: @props.model.get_curr_roulette().get_active_tiles()[0]
         }
 
+    transitionCircleColor: (color, textColor, callback) ->
+        console.log "transitioning color"
+        $("#answer-circle").animate(
+            {
+                'background-color': color,
+                color: textColor,
+            },
+            {
+                duration: FADE_OUT_TIME + FADE_IN_TIME - 300
+                easing: 'easeOutCirc' # consider linear
+            }
+            
+            if typeof(callback) == "function"
+                callback()
+        )
+
     setRandomTile: () ->
         max = @props.model.get_curr_roulette().get_active_tiles().length - 1
         min = 0
@@ -43,11 +60,14 @@ defaultPageView = React.createClass
         @props.model.set_cur_view("SPINNER_NEW")
 
     animateClick: ->
+        @transitionCircleColor(Colors.cyan500, "white")
         $('#answer-box').fadeOut(FADE_OUT_TIME, () =>
             @setRandomTile()
             $('#answer-box').text("Deciding...").fadeIn(FADE_IN_TIME).fadeOut(FADE_OUT_TIME, () =>
-                $('#answer-box').text(@state.current_tile.text).fadeIn(FADE_IN_TIME, () =>
-                    @refs.selectionDialog.show()
+                @transitionCircleColor(Colors.yellow400, Colors.cyan500, () =>
+                    $('#answer-box').text(@state.current_tile.text).fadeIn(FADE_IN_TIME, () =>
+                        @refs.selectionDialog.show()
+                    )
                 )
             )
         )
@@ -56,6 +76,7 @@ defaultPageView = React.createClass
         @refs.selectionDialog.dismiss()
 
     render: ->
+        console.log "rendering"
         outer_circle_style = {'height': '200px', 'width':'200px'}
         inner_circle_style = {'height': '70px', 'width':'70px'}
         standardActions = [
@@ -85,7 +106,7 @@ defaultPageView = React.createClass
                     <div className='col-sm-4'></div>
                     <div className='col-sm-4'>
                         <div className='center-block'>
-                            <Paper zDepth={1} circle={true} style={outer_circle_style} onClick={@animateClick}>
+                            <Paper id='answer-circle' zDepth={1} circle={true} style={outer_circle_style} onClick={@animateClick}>
                                 <div className='row row-sm-flex-center'>
                                     <div id='answer-box' className='center-block' style={{'height': '201px', lineHeight: '201px', fontSize: '24px'}}>
                                         Click To Choose!
