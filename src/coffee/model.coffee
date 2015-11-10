@@ -31,7 +31,7 @@ class Model extends EventEmitter
 
         @set_curr_roulette('bars')
         @main_title = "Shuffle-It"
-        @curr_view = "SPINNER_MAIN"
+        @curr_view = "SPINNER_NEW"
 
     get_curr_view: () ->
         return @curr_view

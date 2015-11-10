@@ -2,6 +2,7 @@ React = require('react')
 DefaultPageView = require('./defaultPageView')
 SpinnerTileView = require('./spinnerTileView')
 SpinnerEditView = require('./spinnerEditView')
+SpinnerNewView = require('./spinnerNewView')
 Globals = require('./globals')
 
 Mui = require('material-ui')
@@ -17,6 +18,7 @@ menuItems = [
     { route: 'get-started', text: 'Spin!'},
     { route: 'customization', text: 'View All' },
     { route: 'components', text: 'Edit Spinner' },
+    { route: 'new-spinner', text: 'New Spinner'},
     { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
     {
        type: MenuItem.Types.LINK,
@@ -74,6 +76,7 @@ appView = React.createClass
             when 0 then @props.model.set_cur_view("SPINNER_MAIN") # TODO fix hardcode
             when 1 then @props.model.set_cur_view("SPINNER_SELECT") # TODO fix hardcode
             when 2 then @props.model.set_cur_view("SPINNER_EDIT") # TODO fix hardcode
+            when 3 then @props.model.set_cur_view("SPINNER_NEW") # TODO fix hardcode
             else alert("error, unknown index in leftNav")
 
     render: ->
@@ -95,6 +98,11 @@ appView = React.createClass
                         model={@props.model}
                         toggleLeft={@toggleLeft}
                     />
+                when "SPINNER_NEW"
+                    <SpinnerNewView
+                        model={@props.model}
+                        toggleLeft={@toggleLeft}
+                    />
                 else alert("error, unknown current view")
             }
             <LeftNav ref="leftNav" docked={false} menuItems={menuItems} onChange={@menuOnChange} />
@@ -102,7 +110,7 @@ appView = React.createClass
                 ref='snack'
                 message="You Chose Something!"
                 action="undo"
-                openOnMount=true
+                openOnMount=false
                 autoHideDuration={4000}
                 onActionTouchTap={@toggleLeft}/>
         </div>

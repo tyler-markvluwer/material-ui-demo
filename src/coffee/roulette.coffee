@@ -5,6 +5,7 @@ EventEmitter = require('events').EventEmitter # used to tell UI when to update
 class Roulette extends EventEmitter
     constructor: (@name) ->
         @tiles = []
+        @img = ''
 
     force_emit: () ->
         console.log 'roulette force emit'
@@ -16,7 +17,12 @@ class Roulette extends EventEmitter
         tile.on 'tile-toggle', @force_emit
 
     cover_photo_url: () ->
-        return @tiles[0].img
+        if @img.length
+            return @img
+        if @tiles.length
+            return @tiles[0].img
+        else
+            return ''
 
     remove_tile: (index) ->
 

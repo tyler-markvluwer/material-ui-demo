@@ -1,5 +1,6 @@
 React = require('react')
-RouletteView = require('./rouletteView')
+PlusButton = require('./plusButton')
+
 {AppBar, FlatButton, Dialog, RaisedButton, ActionGrade, ListDivider, List, ListItem, Paper, IconButton, Snackbar} = require('material-ui')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
 StarIcon = require('material-ui/lib/svg-icons/action/grade')
@@ -38,11 +39,16 @@ defaultPageView = React.createClass
     showSnack: ->
         @props.snack_show()
 
+    addSpinner: () ->
+        @props.model.set_cur_view("SPINNER_NEW")
+
     animateClick: ->
         $('#answer-box').fadeOut(FADE_OUT_TIME, () =>
             @setRandomTile()
-            $('#answer-box').text(@state.current_tile.text).fadeIn(FADE_IN_TIME, () =>
-                @refs.selectionDialog.show()
+            $('#answer-box').text("Deciding...").fadeIn(FADE_IN_TIME).fadeOut(FADE_OUT_TIME, () =>
+                $('#answer-box').text(@state.current_tile.text).fadeIn(FADE_IN_TIME, () =>
+                    @refs.selectionDialog.show()
+                )
             )
         )
 
@@ -60,8 +66,9 @@ defaultPageView = React.createClass
         <div>
             <AppBar
                 title="Shuffle-It"
-                iconElementRight={<IconButton><AddCircle /></IconButton>}
+                iconElementRight={<PlusButton click={@addSpinner} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
+                onRightIconButtonTouchTap={@addNewSpinner}
             />
             <Dialog
                 ref='selectionDialog'
@@ -78,9 +85,9 @@ defaultPageView = React.createClass
                     <div className='col-sm-4'></div>
                     <div className='col-sm-4'>
                         <div className='center-block'>
-                            <Paper zDepth={1} circle={true} style={outer_circle_style}>
+                            <Paper zDepth={1} circle={true} style={outer_circle_style} onClick={@animateClick}>
                                 <div className='row row-sm-flex-center'>
-                                    <div id='answer-box' onClick={@animateClick} className='center-block' style={{'height': '201px', lineHeight: '201px', fontSize: '24px'}}>
+                                    <div id='answer-box' className='center-block' style={{'height': '201px', lineHeight: '201px', fontSize: '24px'}}>
                                         Click To Choose!
                                     </div>
                                 </div>
@@ -101,16 +108,6 @@ defaultPageView = React.createClass
                     </List>
                 </div>
             </div>
-
-            <footer style={'height': '50px'}>
-                <RaisedButton
-                    label="Spin!"
-                    fullWidth=true
-                    primary=true
-                    onClick={@spinRoulette}
-                    style={'height': '100%'}
-                />
-            </footer>
         </div>
 
 module.exports = React.createFactory(defaultPageView)

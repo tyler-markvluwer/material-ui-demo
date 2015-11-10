@@ -27,8 +27,7 @@ spinnerEditView = React.createClass
         }
 
     storeInput: () ->
-        inputVal = @refs.tileInput.getValue()
-        @state.tileInput = inputVal
+        @state.tileInput = @refs.tileInput.getValue()
         @update()
         console.log @state
 
@@ -40,12 +39,16 @@ spinnerEditView = React.createClass
             @refs.tileInput.clearValue()
             @update()
 
+    goToMain: () ->
+        @props.model.set_cur_view("SPINNER_MAIN")
+
     render: ->
         <div>
             <AppBar
                 title={"Edit: " + @props.model.get_curr_roulette().name}
-                iconElementRight={<FlatButton label="save" />}
+                iconElementRight={<FlatButton label="save" onClick={@goToMain} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
+                onRightIconButtonTouchTap={@testFunc}
             />
             <br />  
             <div className='container' id='spinner-tile-div'>
@@ -95,12 +98,7 @@ spinnerEditView = React.createClass
                         if not tile.active
                             <ListItem
                                 primaryText={tile.text}
-                                onClick={@props.model.set_curr_roulette.bind(this, tile.text)}
-                                leftCheckbox={
-                                    <Checkbox
-                                        onCheck={tile.toggleActive}
-                                    />
-                                }
+                                onClick={tile.toggleActive}
                             />
                     }
                 </List>
