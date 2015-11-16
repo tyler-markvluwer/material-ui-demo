@@ -23,10 +23,12 @@ defaultPageView = React.createClass
         {
             current_index: 0
             current_tile: @props.model.get_curr_roulette().get_active_tiles()[0]
+            curr_text: ''
         }
 
     transitionCircleColor: (color, textColor, callback) ->
         console.log "transitioning color"
+        $("#answer-circle").css("background-image", "")
         $("#answer-circle").animate(
             {
                 'background-color': color,
@@ -72,12 +74,21 @@ defaultPageView = React.createClass
             )
         )
 
+    spinnerSelect: (spinner) ->
+        $('#answer-box').text('')
+        $("#answer-circle").css("background-color", "white")
+        @state.curr_text = ''
+        @props.model.set_curr_roulette(spinner)
+        # @update()
+
     _onDialogSubmit: ->
         @refs.selectionDialog.dismiss()
 
     render: ->
         console.log "rendering"
-        outer_circle_style = {'height': '200px', 'width':'200px'}
+        img_style = {'max-width':'100%', 'max-height':'100%'}
+        outer_circle_style = {'height': '200px', 'width':'200px', 'background-image': 'url(' + @props.model.get_curr_roulette().cover_photo_url() + ')', 'background-size': 'cover'}
+        # outer_circle_style = {'height': '200px', 'width':'200px'}
         inner_circle_style = {'height': '70px', 'width':'70px'}
         standardActions = [
           { text: 'Try Again' },
@@ -108,9 +119,7 @@ defaultPageView = React.createClass
                         <div className='center-block'>
                             <Paper id='answer-circle' zDepth={1} circle={true} style={outer_circle_style} onClick={@animateClick}>
                                 <div className='row row-sm-flex-center'>
-                                    <div id='answer-box' className='center-block' style={{'height': '201px', lineHeight: '201px', fontSize: '24px'}}>
-                                        Click To Choose!
-                                    </div>
+                                    <div id='answer-box' className='center-block' style={{'height': '201px', lineHeight: '201px', fontSize: '24px'}}>{@state.curr_text}</div>
                                 </div>
                             </Paper>
                         </div>
@@ -122,9 +131,9 @@ defaultPageView = React.createClass
                         <ListDivider />
                         {for spinner in @props.model.get_roulettes()
                             if spinner.name == @props.model.get_curr_roulette().name
-                                <ListItem primaryText={spinner.name} onClick={@props.model.set_curr_roulette.bind(this, spinner.name)} leftIcon={<IconButton><StarIcon /></IconButton>} />
+                                <ListItem primaryText={spinner.name} onClick={@spinnerSelect.bind(this, spinner.name)} leftIcon={<IconButton><StarIcon /></IconButton>} />
                             else
-                                <ListItem primaryText={spinner.name} onClick={@props.model.set_curr_roulette.bind(this, spinner.name)}/>
+                                <ListItem primaryText={spinner.name} onClick={@spinnerSelect.bind(this, spinner.name)}/>
                         }
                     </List>
                 </div>

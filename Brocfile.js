@@ -46,4 +46,4 @@ var index = pickFiles('src/static', {
 //     destDir: '/fonts'
 // });
 
-module.exports = mergeTrees([js, index, css, sass]);
+module.exports = mergeTrees([js, index, css, sass], {overwrite: true});
