@@ -76,7 +76,6 @@ spinnerEditView = React.createClass
                             style={{color:Colors.amber900}}
                             primaryText={@state.tileInput}
                             disabled=true
-
                         />
                     }
                     {for tile in @props.model.get_curr_roulette().get_tiles()
@@ -85,8 +84,8 @@ spinnerEditView = React.createClass
                                 primaryText={tile.text}
                                 onClick={tile.toggleActive}
                                 rightIconButton={
-                                    <IconMenu
-                                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                                    <IconMenu iconButtonElement={
+                                        <IconButton><MoreVertIcon /></IconButton>}
                                     />
                                 }
                             />
