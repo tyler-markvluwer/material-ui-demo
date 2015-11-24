@@ -1,20 +1,30 @@
 React = require('react')
-{AppBar, Checkbox, IconMenu, TextField, IconButton, FlatButton, RaisedButton, ListDivider, List, ListItem, Snackbar} = require('material-ui')
+{AppBar, Checkbox, TextField, IconButton, FlatButton, RaisedButton, ListDivider, List, ListItem, Snackbar} = require('material-ui')
 
 MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
+IconMenu = require('material-ui/lib/menus/icon-menu');
 MenuItem = require('material-ui/lib/menus/menu-item');
 Colors = require('material-ui/lib/styles/colors')
 
-menuItems = [
-    {primaryText: 'item 1', index: 1},
-    {primaryText: 'item 2', index: 2},
-]
+iconButtonElement = (
+  <IconButton
+    touch={true}
+    tooltip="more"
+    tooltipPosition="bottom-right">
+    <MoreVertIcon color={Colors.grey400} />
+  </IconButton>
+)
 
 spinnerEditView = React.createClass    
     #################################
     #       React Functions
     #################################
+
+    contextTouchTap: (e, item) ->
+        console.log e
+        console.log item
+
     componentDidMount: ->
         @props.model.on 'change', @update
 
@@ -24,6 +34,7 @@ spinnerEditView = React.createClass
     getInitialState: ->
         {
             tileInput: ''
+            currRef: null
         }
 
     storeInput: () ->
@@ -35,6 +46,7 @@ spinnerEditView = React.createClass
         if @state.tileInput.length
             @props.model.get_curr_roulette().add_tile(@state.tileInput, null)
             console.log @props.model.get_curr_roulette()
+
             @state.tileInput = ''
             @refs.tileInput.clearValue()
             @update()
@@ -42,13 +54,37 @@ spinnerEditView = React.createClass
     goToMain: () ->
         @props.model.set_cur_view("SPINNER_MAIN")
 
+    disableCallback: () ->
+        @props.model.get_curr_roulette().disable_tile(@state.currRef)
+        console.log 'disable'
+
+    editCallback: () ->
+        @deleteCallback()
+        @refs.tileInput.setValue(@state.currRef)
+        @state.tileInput = @state.currRef
+        @refs.tileInput.focus()
+
+    deleteCallback: () ->
+        @props.model.get_curr_roulette().remove_tile(@state.currRef)
+        @update()
+
+    setCurrListItem: (ref) ->
+        @state.currRef = ref
+
     render: ->
+        rightIconMenu = (
+            <IconMenu iconButtonElement={iconButtonElement} >
+                <MenuItem onClick={@disableCallback}>Disable</MenuItem>
+                <MenuItem onClick={@editCallback}>Edit</MenuItem>
+                <MenuItem onClick={@deleteCallback}>Delete</MenuItem>
+            </IconMenu>
+        )
+
         <div>
             <AppBar
                 title={"Edit: " + @props.model.get_curr_roulette().name}
                 iconElementRight={<FlatButton label="save" onClick={@goToMain} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
-                onRightIconButtonTouchTap={@testFunc}
             />
             <br />  
             <div className='container' id='spinner-tile-div'>
@@ -81,13 +117,11 @@ spinnerEditView = React.createClass
                     {for tile in @props.model.get_curr_roulette().get_tiles()
                         if tile.active
                             <ListItem
+                                ref={tile.text}
+                                rightIconButton={rightIconMenu}
                                 primaryText={tile.text}
-                                onClick={tile.toggleActive}
-                                rightIconButton={
-                                    <IconMenu iconButtonElement={
-                                        <IconButton><MoreVertIcon /></IconButton>}
-                                    />
-                                }
+                                onTouchTap={tile.toggleActive}
+                                onClick={@setCurrListItem.bind(this, tile.text)}
                             />
                     }
                 </List>

@@ -24,7 +24,11 @@ class Roulette extends EventEmitter
         else
             return ''
 
-    remove_tile: (index) ->
+    remove_tile: (text) ->
+        @tiles = (tile for tile in @tiles when tile.text != text)
+
+    disable_tile: (text) ->
+        (tile.toggleActive() for tile in @tiles when tile.text == text)
 
     get_tiles: () ->
         return @tiles

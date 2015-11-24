@@ -1,7 +1,7 @@
 React = require('react')
 PlusButton = require('./plusButton')
 
-{AppBar, FlatButton, Dialog, RaisedButton, ActionGrade, ListDivider, List, ListItem, Paper, IconButton, Snackbar} = require('material-ui')
+{AppBar, FlatButton, TextField, Dialog, RaisedButton, ActionGrade, ListDivider, List, ListItem, Paper, IconButton, Snackbar} = require('material-ui')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
 StarIcon = require('material-ui/lib/svg-icons/action/grade')
 Colors = require('material-ui/lib/styles/colors')
@@ -85,14 +85,23 @@ defaultPageView = React.createClass
         @refs.selectionDialog.dismiss()
 
     render: ->
-        console.log "rendering"
         img_style = {'max-width':'100%', 'max-height':'100%'}
-        outer_circle_style = {'height': '200px', 'width':'200px', 'background-image': 'url(' + @props.model.get_curr_roulette().cover_photo_url() + ')', 'background-size': 'cover'}
+        outer_circle_style = {'height': '200px', 'width':'200px', backgroundImage: 'url(' + @props.model.get_curr_roulette().cover_photo_url() + ')', backgroundSize: 'cover'}
         # outer_circle_style = {'height': '200px', 'width':'200px'}
         inner_circle_style = {'height': '70px', 'width':'70px'}
         standardActions = [
           { text: 'Try Again' },
           { text: 'Submit', onTouchTap: @_onDialogSubmit, ref: 'submit' }
+        ]
+        customActions = [
+            <div>
+                <TextField hintText="username" />
+                <br />
+                <TextField hintText="password" />
+                <br />
+                <br />
+                <RaisedButton label="Login" primary={true} style={{width:'40%'}} />
+            </div>
         ]
 
         <div>
@@ -102,6 +111,14 @@ defaultPageView = React.createClass
                 onLeftIconButtonTouchTap={@props.toggleLeft}
                 onRightIconButtonTouchTap={@addNewSpinner}
             />
+
+            <Dialog
+                actions={customActions}
+                actionFocus="submit"
+                modal={true}
+                openImmediately={false}>
+            </Dialog>
+
             <Dialog
                 ref='selectionDialog'
                 title="You've Made a Decision!"
@@ -130,10 +147,11 @@ defaultPageView = React.createClass
                     <List subheader="Previous Spinners">
                         <ListDivider />
                         {for spinner in @props.model.get_roulettes()
+                            @state.current_index += 1
                             if spinner.name == @props.model.get_curr_roulette().name
-                                <ListItem primaryText={spinner.name} onClick={@spinnerSelect.bind(this, spinner.name)} leftIcon={<IconButton><StarIcon /></IconButton>} />
+                                <ListItem primaryText={spinner.name} key={@state.current_index} onClick={@spinnerSelect.bind(this, spinner.name)} leftIcon={<IconButton><StarIcon /></IconButton>} />
                             else
-                                <ListItem primaryText={spinner.name} onClick={@spinnerSelect.bind(this, spinner.name)}/>
+                                <ListItem primaryText={spinner.name} key={@state.current_index} onClick={@spinnerSelect.bind(this, spinner.name)}/>
                         }
                     </List>
                 </div>
