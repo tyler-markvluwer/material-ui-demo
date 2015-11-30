@@ -60,8 +60,24 @@ class Model extends EventEmitter
         console.log 'force emitting'
         @emit 'toggle'
 
+    get_curr_photo: () ->
+        if @get_curr_roulette()
+            return @get_curr_roulette().cover_photo_url()
+        else
+            return ''
+
     get_curr_roulette: () ->
         return @curr_roul
+
+    remove_roulette: (name) ->
+        @rouls = (roul for roul in @rouls when roul.name != name)
+        @emit 'change'
+
+    reset_curr_roulette: () ->
+        if @rouls.length
+            @curr_roul = @rouls[0]
+        else
+            @curr_roul = null
 
     set_curr_roulette: (name) => #REQUIRED to pass correct context of 'this' into function
         @curr_roul = @find_roulette(name)

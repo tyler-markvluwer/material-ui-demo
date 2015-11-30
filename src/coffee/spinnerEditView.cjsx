@@ -1,5 +1,5 @@
 React = require('react')
-{AppBar, Checkbox, TextField, IconButton, FlatButton, RaisedButton, ListDivider, List, ListItem, Snackbar} = require('material-ui')
+{AppBar, Dialog, Checkbox, TextField, IconButton, FlatButton, RaisedButton, ListDivider, List, ListItem, Snackbar} = require('material-ui')
 
 MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
@@ -54,6 +54,13 @@ spinnerEditView = React.createClass
     goToMain: () ->
         @props.model.set_cur_view("SPINNER_MAIN")
 
+    _deleteSpinner: () ->
+        curr_name = @props.model.get_curr_roulette().name
+        @props.model.remove_roulette(curr_name)
+        @props.model.reset_curr_roulette()
+
+        @goToMain()
+
     disableCallback: () ->
         @props.model.get_curr_roulette().disable_tile(@state.currRef)
         console.log 'disable'
@@ -71,6 +78,9 @@ spinnerEditView = React.createClass
     setCurrListItem: (ref) ->
         @state.currRef = ref
 
+    showDeleteDialog: () ->
+        @refs.deleteDialog.show()
+
     render: ->
         rightIconMenu = (
             <IconMenu iconButtonElement={iconButtonElement} >
@@ -79,13 +89,26 @@ spinnerEditView = React.createClass
                 <MenuItem onClick={@deleteCallback}>Delete</MenuItem>
             </IconMenu>
         )
+        standardActions = [
+          { text: 'Cancel', ref: 'cancelRef'},
+          { text: 'Delete', onTouchTap: @_deleteSpinner, ref: 'deleteRef' }
+        ]
 
         <div>
             <AppBar
                 title={"Edit: " + @props.model.get_curr_roulette().name}
-                iconElementRight={<FlatButton label="save" onClick={@goToMain} />}
+                iconElementRight={<FlatButton label="delete" onClick={@showDeleteDialog} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
             />
+            <Dialog
+                ref='deleteDialog'
+                title={"Delete " + @props.model.get_curr_roulette().name + "?"}
+                actions={standardActions}
+                actionFocus="cancelRef"
+                modal={true}>
+                {"Are you sure you want to delete " + @props.model.get_curr_roulette().name + "? This action cannot be reversed!"}
+            </Dialog>
+
             <br />  
             <div className='container' id='spinner-tile-div'>
                 <div className='row'>
@@ -103,6 +126,9 @@ spinnerEditView = React.createClass
                             label="Add"
                             onClick={@addTile}
                             primary={true} />
+                    </div>
+                    <div className='col-sm-3'>
+                        
                     </div>
                 </div>
                 <List subheader="Active Tiles">

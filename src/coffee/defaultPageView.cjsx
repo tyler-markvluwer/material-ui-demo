@@ -22,7 +22,7 @@ defaultPageView = React.createClass
     getInitialState: ->
         {
             current_index: 0
-            current_tile: @props.model.get_curr_roulette().get_active_tiles()[0]
+            current_tile: {text: 'default_tile_value'}
             curr_text: ''
         }
 
@@ -110,7 +110,7 @@ defaultPageView = React.createClass
 
     render: ->
         img_style = {'max-width':'100%', 'max-height':'100%'}
-        outer_circle_style = {'height': '200px', 'width':'200px', backgroundImage: 'url(' + @props.model.get_curr_roulette().cover_photo_url() + ')', backgroundSize: 'cover'}
+        outer_circle_style = {'height': '200px', 'width':'200px', backgroundImage: 'url(' + @props.model.get_curr_photo() + ')', backgroundSize: 'cover'}
         # outer_circle_style = {'height': '200px', 'width':'200px'}
         inner_circle_style = {'height': '70px', 'width':'70px'}
         standardActions = [

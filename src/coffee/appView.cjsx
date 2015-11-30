@@ -14,29 +14,6 @@ Colors = require('material-ui/lib/styles/colors')
 NavigationClose = require('material-ui/lib/svg-icons/navigation/close')
 MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
 
-menuItems = [
-    { route: 'get-started', text: 'Spin!'},
-    { route: 'customization', text: 'View All' },
-    { route: 'components', text: 'Edit Spinner' },
-    { route: 'new-spinner', text: 'New Spinner'},
-    { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
-    {
-       type: MenuItem.Types.LINK,
-       payload: 'https://github.com/callemall/material-ui',
-       text: 'GitHub'
-    },
-    {
-       text: 'Disabled',
-       disabled: true
-    },
-    {
-       type: MenuItem.Types.LINK,
-       payload: 'https://www.google.com',
-       text: 'Disabled Link',
-       disabled: true
-    },
-]
-
 appView = React.createClass    
     #################################
     #       React Functions
@@ -75,11 +52,39 @@ appView = React.createClass
         switch index
             when 0 then @props.model.set_cur_view("SPINNER_MAIN") # TODO fix hardcode
             when 1 then @props.model.set_cur_view("SPINNER_SELECT") # TODO fix hardcode
-            when 2 then @props.model.set_cur_view("SPINNER_EDIT") # TODO fix hardcode
+            when 2
+                if @props.model.get_curr_roulette()
+                    @props.model.set_cur_view("SPINNER_EDIT") # TODO fix hardcode
             when 3 then @props.model.set_cur_view("SPINNER_NEW") # TODO fix hardcode
             else alert("error, unknown index in leftNav")
 
     render: ->
+        console.log "disable edit? "
+        console.log(@props.model.get_curr_roulette()==null)
+        console.log @props.model.get_curr_roulette()
+        menuItems = [
+            { route: 'get-started', text: 'Spin!', disabled: @props.model.get_curr_roulette()==null},
+            { route: 'customization', text: 'View All', disabled: @props.model.get_curr_roulette()==null},
+            { route: 'components', text: 'Edit Spinner', disabled: @props.model.get_curr_roulette()==null},
+            { route: 'new-spinner', text: 'New Spinner'},
+            { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+            {
+               type: MenuItem.Types.LINK,
+               payload: 'https://github.com/callemall/material-ui',
+               text: 'GitHub'
+            },
+            {
+               text: 'Disabled',
+               disabled: true
+            },
+            {
+               type: MenuItem.Types.LINK,
+               payload: 'https://www.google.com',
+               text: 'Disabled Link',
+               disabled: true
+            },
+        ]
+
         <div className='app-div' id='awesome-441-app-div'>
             {switch @props.model.get_curr_view()
                 when "SPINNER_MAIN"
