@@ -49,6 +49,9 @@ defaultPageView = React.createClass
         index = Math.floor(Math.random() * (max - min + 1)) + min;
 
         @state.current_tile = @props.model.get_curr_roulette().get_active_tiles()[index]
+        @props.model.recent_decision.tile = @state.current_tile.text
+        @props.model.recent_decision.spinner = @props.model.get_curr_roulette().name
+
         @update()
         return @state.current_tile.text
 
@@ -84,16 +87,21 @@ defaultPageView = React.createClass
     _onDialogSubmit: ->
         @refs.selectionDialog.dismiss()
 
+    _getName: ->
+        FB.api('/me', (response) ->
+          return response.name
+        )
+
     _shareResult: ->
         FB.ui({
           method: 'share_open_graph',
           action_type: 'og.likes',
           action_properties: JSON.stringify({
             object: {
-              'og:url': "http://advice.uk.match.com/quizzes/which-european-are-you-destined-date",
-              'og:title': "I got "+ "France" +"! Which European are you destined to date?",
-              'og:description': "I am a mighty good description",
-              'og:image': 'http://cbsnews2.cbsistatic.com/hub/i/r/2013/05/09/b31732b6-c3e4-11e2-a43e-02911869d855/thumbnail/620x350/2d39936ea1b25b3d2680ec777c38b192/google-nsa-book.jpg'
+              'og:url': "http://www-personal.umich.edu/~tylermar",
+              'og:title': "I chose " + @props.model.recent_decision.tile + " from " + @props.model.recent_decision.spinner,
+              'og:description': "Make your next decision!",
+              'og:image': 'http://www-personal.umich.edu/~tylermar/permanent/screenshot.png'
             }
           })
         }, (response) ->
