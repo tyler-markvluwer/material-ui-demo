@@ -18,6 +18,25 @@
 		<title>441 test app</title>
 	</head>
   <body>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '425056787688787',
+          xfbml      : true,
+          version    : 'v2.5'
+        });
+      };
+
+      (function(d, s, id){
+          console.log("hi");
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <div id="app-view-mount"></div>
     <script src='roulette.min.js'></script>
     <script src="js/bundle.js"></script> <!-- Needed to use the contents of the coffeescript files -->

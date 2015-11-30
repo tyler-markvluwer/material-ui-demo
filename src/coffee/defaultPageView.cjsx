@@ -84,14 +84,30 @@ defaultPageView = React.createClass
     _onDialogSubmit: ->
         @refs.selectionDialog.dismiss()
 
+    _shareResult: ->
+        FB.ui({
+          method: 'share_open_graph',
+          action_type: 'og.likes',
+          action_properties: JSON.stringify({
+            object: {
+              'og:url': "http://advice.uk.match.com/quizzes/which-european-are-you-destined-date",
+              'og:title': "I got "+ "France" +"! Which European are you destined to date?",
+              'og:description': "I am a mighty good description",
+              'og:image': 'http://cbsnews2.cbsistatic.com/hub/i/r/2013/05/09/b31732b6-c3e4-11e2-a43e-02911869d855/thumbnail/620x350/2d39936ea1b25b3d2680ec777c38b192/google-nsa-book.jpg'
+            }
+          })
+        }, (response) ->
+          console.log(response)
+        )
+
     render: ->
         img_style = {'max-width':'100%', 'max-height':'100%'}
         outer_circle_style = {'height': '200px', 'width':'200px', backgroundImage: 'url(' + @props.model.get_curr_roulette().cover_photo_url() + ')', backgroundSize: 'cover'}
         # outer_circle_style = {'height': '200px', 'width':'200px'}
         inner_circle_style = {'height': '70px', 'width':'70px'}
         standardActions = [
-          { text: 'Try Again' },
-          { text: 'Submit', onTouchTap: @_onDialogSubmit, ref: 'submit' }
+          { text: 'Share', onTouchTap: @_shareResult, ref: 'share' },
+          { text: 'Try Again', onTouchTap: @_onDialogSubmit, ref: 'submit' }
         ]
         customActions = [
             <div>
