@@ -21,13 +21,17 @@
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-sass": "^0.6.2",
     "broccoli-static-compiler": "^0.2.1",
+    "broccoli-funnel": "*",
+    "broccoli-autoprefixer": "*",
     "cordova": "^4.3.0",
     "grunt-cli": "^0.1.13",
-    "material-ui": "^0.13.1",
+    "react": "^0.14.3s",
+    "react-dom": "^0.14.0",
+    "react-tap-event-plugin": "^0.2.0",
+    "material-ui": "^0.13.4",
     "node-sass": "^2.0.1",
     "promise": "^6.1.0",
-    "promise.coffee": "^1.0.6",
-    "react": "^0.14.0"
+    "promise.coffee": "^1.0.6"
   },
   "keywords": [
     "fitness",

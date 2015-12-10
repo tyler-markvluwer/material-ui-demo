@@ -63,26 +63,26 @@ appView = React.createClass
         console.log(@props.model.get_curr_roulette()==null)
         console.log @props.model.get_curr_roulette()
         menuItems = [
-            { route: 'get-started', text: 'Spin!', disabled: @props.model.get_curr_roulette()==null},
+            { route: 'get-started', text: 'ShuffleIt!', disabled: @props.model.get_curr_roulette()==null},
             { route: 'customization', text: 'View All', disabled: @props.model.get_curr_roulette()==null},
             { route: 'components', text: 'Edit Spinner', disabled: @props.model.get_curr_roulette()==null},
             { route: 'new-spinner', text: 'New Spinner'},
-            { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+            { type: MenuItem.Types.SUBHEADER, text: 'User Options' },
+            # {
+            #    type: MenuItem.Types.LINK,
+            #    payload: 'https://github.com/callemall/material-ui',
+            #    text: 'GitHub'
+            # },
             {
-               type: MenuItem.Types.LINK,
-               payload: 'https://github.com/callemall/material-ui',
-               text: 'GitHub'
-            },
-            {
-               text: 'Disabled',
+               text: 'Login',
                disabled: true
             },
-            {
-               type: MenuItem.Types.LINK,
-               payload: 'https://www.google.com',
-               text: 'Disabled Link',
-               disabled: true
-            },
+            # {
+            #    type: MenuItem.Types.LINK,
+            #    payload: 'https://www.google.com',
+            #    text: 'Disabled Link',
+            #    disabled: true
+            # },
         ]
 
         <div className='app-div' id='awesome-441-app-div'>

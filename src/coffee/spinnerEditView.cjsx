@@ -96,7 +96,7 @@ spinnerEditView = React.createClass
 
         <div>
             <AppBar
-                title={"Edit: " + @props.model.get_curr_roulette().name}
+                title={ @props.model.get_curr_roulette().name}
                 iconElementRight={<FlatButton label="delete" onClick={@showDeleteDialog} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
             />

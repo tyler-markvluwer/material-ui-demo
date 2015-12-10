@@ -19,6 +19,7 @@ spinnerNewView = React.createClass
     #################################
     componentDidMount: ->
         @props.model.on 'change', @update
+        @refs.spinnerName.focus()
 
     update: ->
         console.log "updating"
@@ -31,15 +32,23 @@ spinnerNewView = React.createClass
             imgs: []
             saved_img: ''
             most_recent_action: new Date()
+            tempName: ''
         }
 
     _onDialogSubmit: ->
+        if not @state.tempName.length
+            @refs.spinnerName.focus()
+            return
+
         @state.spinnerName = @state.tempName
         @refs.nameDialog.dismiss()
         @update()
         @state.currRoul = new Roulette(@state.spinnerName)
         @props.model.add_roulette(@state.currRoul)
         @props.model.set_curr_roulette(@state.currRoul.name)
+        @refs.imageTerms.setValue(@state.spinnerName)
+        @_storeValue()
+        @refs.imageTerms.focus()
 
     _storeName: ->
         @state.tempName = @refs.spinnerName.getValue()
@@ -121,7 +130,7 @@ spinnerNewView = React.createClass
             />
             <br />
             <div className='container'>
-                <TextField ref='imageTerms' hintText="Search for cover image" onChange={@_storeValue} />
+                <TextField ref='imageTerms' floatingLabelText="Search for cover image" onChange={@_storeValue} />
             </div>
             
             <Dialog

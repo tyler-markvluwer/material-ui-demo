@@ -1,6 +1,6 @@
 React = require('react') # no ./ prefix
-key1 = require('./key1')
-key2 = require('./key2')
+#key1 = require('./key1') # TODO put this back in!
+#key2 = require('./key2') # TODO put this back in!
 
 # import the Model class
 Model = require('./model') # doesn't have to be called model# create an instance of a model

@@ -37,7 +37,7 @@ spinnerTileView = React.createClass
             {for roul in @props.model.get_roulettes()
                 <GridTile
                     title={roul.name}
-                    subtitle={<span>by <b>author_here</b></span>}
+                    subtitle={<span>by <b>demo user</b></span>}
                     actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
                     onClick={@activateRoulette.bind(this, roul.name)}
                 >
