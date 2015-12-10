@@ -1,5 +1,6 @@
 React = require('react')
 PlusButton = require('./plusButton')
+Resources = require('./resources')
 
 {AppBar, FlatButton, TextField, Dialog, RaisedButton, ActionGrade, ListDivider, List, ListItem, Paper, IconButton, Snackbar} = require('material-ui')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
@@ -130,7 +131,7 @@ defaultPageView = React.createClass
 
         <div>
             <AppBar
-                title="Shuffle-It"
+                title={Resources.APP_NAME}
                 iconElementRight={<PlusButton click={@addSpinner} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
                 onRightIconButtonTouchTap={@addNewSpinner}

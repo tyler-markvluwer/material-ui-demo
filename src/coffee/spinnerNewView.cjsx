@@ -31,9 +31,14 @@ spinnerNewView = React.createClass
             imgs: []
             saved_img: ''
             most_recent_action: new Date()
+            tempName: ''
         }
 
     _onDialogSubmit: ->
+        if not @state.tempName.length
+            @refs.spinnerName.focus()
+            return
+
         @state.spinnerName = @state.tempName
         @refs.nameDialog.dismiss()
         @update()
