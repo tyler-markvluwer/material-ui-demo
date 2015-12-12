@@ -1,5 +1,5 @@
 React = require('react')
-DefaultPageView = require('./defaultPageView')
+ShuffleItView = require('./shuffleItView')
 SpinnerTileView = require('./spinnerTileView')
 SpinnerEditView = require('./spinnerEditView')
 SpinnerNewView = require('./spinnerNewView')
@@ -72,7 +72,7 @@ appView = React.createClass
         <div className='app-div' id='awesome-441-app-div'>
             {switch @props.model.get_curr_view()
                 when Resources.SPIN_VIEW
-                    <DefaultPageView
+                    <ShuffleItView
                         model={@props.model}
                         snack_show={@showSnack}
                         toggleLeft={@toggleLeft}
