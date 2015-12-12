@@ -93,6 +93,10 @@ spinnerEditView = React.createClass
     _gotoSelectImgView: () ->
         @props.model.set_cur_view(Resources.NEW_COVER_PHOTO_VIEW)
 
+    _onContextMenuItemTouchTap: (event, item) ->
+        console.log event
+        console.log item
+
     render: ->
         rightIconMenuForActive = (
             <IconMenu iconButtonElement={iconButtonElement} >
@@ -129,7 +133,7 @@ spinnerEditView = React.createClass
             </Dialog>
 
             <br />  
-            <div className='container' id='spinner-tile-div' style={height: '70%', overflowY: 'auto'}>
+            <div className='container' id='spinner-tile-div' style={height: '70%', overflowY: 'auto', overflowX: 'hidden'}>
                 <div className='row'>
                     <div className='col-sm-3'></div>
                     <div className='col-sm-6'>
