@@ -137,7 +137,7 @@ spinnerEditView = React.createClass
 
                 <List subheader="Active Tiles">
                     <ListDivider />
-                    {if @state.tileInput.length
+                    {if @state.tileInput.length #if the length of the new tile is > 0 add it to ListItem
                         <ListItem
                             style={{color:Colors.amber900}}
                             primaryText={@state.tileInput}
