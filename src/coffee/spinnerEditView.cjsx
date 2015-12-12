@@ -75,8 +75,6 @@ spinnerEditView = React.createClass
         @state.tileInput = @state.currRef
         @refs.tileInput.focus()
 
-        
-
     deleteCallback: () ->
         @props.model.get_curr_roulette().remove_tile(@state.currRef)
         @update()
@@ -93,23 +91,31 @@ spinnerEditView = React.createClass
     _gotoSelectImgView: () ->
         @props.model.set_cur_view(Resources.NEW_COVER_PHOTO_VIEW)
 
-    _onContextMenuItemTouchTap: (event, item) ->
-        console.log event
-        console.log item
+    _onActiveContextMenuItemTouchTap: (event, value) ->
+        switch value
+            when "Disable" then @updateCallback()
+            when "Edit" then @editActiveTileCallback()
+            when "Delete" then @deleteCallback()
+
+    _onInactiveContextMenuItemTouchTap: (event, value) ->
+        switch value
+            when "Enable" then @updateCallback()
+            when "Edit" then @editInactiveTileCallback()
+            when "Delete" then @deleteCallback()
 
     render: ->
         rightIconMenuForActive = (
-            <IconMenu iconButtonElement={iconButtonElement} >
-                <MenuItem onClick={@updateCallback}>Disable</MenuItem>
-                <MenuItem onClick={@editActiveTileCallback}>Edit</MenuItem>
-                <MenuItem onClick={@deleteCallback}>Delete</MenuItem>
+            <IconMenu iconButtonElement={iconButtonElement} onChange={@_onActiveContextMenuItemTouchTap}>
+                <MenuItem value='Disable'>Disable</MenuItem>
+                <MenuItem value='Edit'>Edit</MenuItem>
+                <MenuItem value='Delete'>Delete</MenuItem>
             </IconMenu>
         )
         rightIconMenuForInactive = (
-            <IconMenu iconButtonElement={iconButtonElement} >
-                <MenuItem onClick={@updateCallback}>Enable</MenuItem>
-                <MenuItem onClick={@editInactiveTileCallback}>Edit</MenuItem>
-                <MenuItem onClick={@deleteCallback}>Delete</MenuItem>
+            <IconMenu iconButtonElement={iconButtonElement} onChange={@_onInactiveContextMenuItemTouchTap}>
+                <MenuItem value='Enable'>Enable</MenuItem>
+                <MenuItem value='Edit'>Edit</MenuItem>
+                <MenuItem value='Delete'>Delete</MenuItem>
             </IconMenu>
         )
         standardActions = [
