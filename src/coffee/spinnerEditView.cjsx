@@ -1,4 +1,6 @@
 React = require('react')
+Resources = require('./resources')
+
 {AppBar, Dialog, Checkbox, TextField, IconButton, FlatButton, RaisedButton, ListDivider, List, ListItem, Snackbar} = require('material-ui')
 
 MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
@@ -75,7 +77,10 @@ spinnerEditView = React.createClass
         @refs.deleteDialog.show()
 
     _save: () ->
-        @props.model.set_cur_view("SPINNER_SELECT")
+        @props.model.set_cur_view(Resources.SELECT_VIEW)
+
+    _gotoSelectImgView: () ->
+        @props.model.set_cur_view(Resources.NEW_COVER_PHOTO_VIEW)
 
     render: ->
         rightIconMenu = (
@@ -163,7 +168,7 @@ spinnerEditView = React.createClass
                 <div className='container'>
                     <RaisedButton
                         label="Select New Image"
-                        onClick={''}
+                        onClick={@_gotoSelectImgView}
                         default={true}
                         style={width: '100%'}
                     />

@@ -3,6 +3,7 @@ DefaultPageView = require('./defaultPageView')
 SpinnerTileView = require('./spinnerTileView')
 SpinnerEditView = require('./spinnerEditView')
 SpinnerNewView = require('./spinnerNewView')
+SpinnerNewCoverPhotoView = require('./spinnerNewCoverPhotoView')
 Globals = require('./globals')
 Resources = require('./resources')
 
@@ -88,6 +89,11 @@ appView = React.createClass
                     />
                 when Resources.NEW_VIEW
                     <SpinnerNewView
+                        model={@props.model}
+                        toggleLeft={@toggleLeft}
+                    />
+                when Resources.NEW_COVER_PHOTO_VIEW
+                    <SpinnerNewCoverPhotoView
                         model={@props.model}
                         toggleLeft={@toggleLeft}
                     />
