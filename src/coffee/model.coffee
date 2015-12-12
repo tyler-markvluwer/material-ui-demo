@@ -81,6 +81,13 @@ class Model extends EventEmitter
         @curr_roul = @find_roulette(name)
         @emit 'change'
 
+    roulette_name_exists: (name) ->
+        for roul in @rouls
+            if roul.name == name
+                return true
+
+        return false
+
     get_roulettes: () ->
         return @rouls
 
