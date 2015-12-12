@@ -69,6 +69,7 @@ spinnerEditView = React.createClass
     editInactiveTileCallback: () ->
         @deleteCallback()
         @refs.tileInput.setValue(@state.currRef)
+        @state.tileInput = @state.currRef
         @refs.tileInput.focus()
         
 
