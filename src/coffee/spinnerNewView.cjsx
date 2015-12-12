@@ -113,7 +113,7 @@ spinnerNewView = React.createClass
         @props.model.set_cur_view("SPINNER_EDIT")
 
     cancelNew: ->
-        @props.model.set_cur_view("SPINNER_MAIN")
+        @props.model.set_cur_view("SPINNER_SELECT")
         @refs.nameDialog.dismiss()
 
     render: ->

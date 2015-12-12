@@ -51,8 +51,8 @@ appView = React.createClass
 
     menuOnChange: (event, index, menuItem) ->
         switch index
-            when 0 then @props.model.set_cur_view("SPINNER_MAIN") # TODO fix hardcode
-            when 1 then @props.model.set_cur_view("SPINNER_SELECT") # TODO fix hardcode
+            when 0 then @props.model.set_cur_view("SPINNER_SELECT") # TODO fix hardcode
+            when 1 then @props.model.set_cur_view("SPINNER_MAIN") # TODO fix hardcode
             when 2
                 if @props.model.get_curr_roulette()
                     @props.model.set_cur_view("SPINNER_EDIT") # TODO fix hardcode
@@ -64,10 +64,10 @@ appView = React.createClass
         console.log(@props.model.get_curr_roulette()==null)
         console.log @props.model.get_curr_roulette()
         menuItems = [
+            { route: 'customization', text: 'Home', disabled: @props.model.get_curr_roulette()==null},
             { route: 'get-started', text: 'ShuffleIt!', disabled: @props.model.get_curr_roulette()==null},
-            { route: 'customization', text: 'View All', disabled: @props.model.get_curr_roulette()==null},
             { route: 'components', text: 'Edit Spinner', disabled: @props.model.get_curr_roulette()==null},
-            { route: 'new-spinner', text: 'New Spinner'},
+            { route: 'new-spinner', text: 'Add Spinner'},
             { type: MenuItem.Types.SUBHEADER, text: 'User Options' },
             # {
             #    type: MenuItem.Types.LINK,
