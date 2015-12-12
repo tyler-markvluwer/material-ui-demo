@@ -81,6 +81,9 @@ spinnerEditView = React.createClass
     showDeleteDialog: () ->
         @refs.deleteDialog.show()
 
+    _save: () ->
+        @props.model.set_cur_view("SPINNER_SELECT")
+
     render: ->
         rightIconMenu = (
             <IconMenu iconButtonElement={iconButtonElement} >
@@ -97,7 +100,7 @@ spinnerEditView = React.createClass
         <div>
             <AppBar
                 title={ @props.model.get_curr_roulette().name}
-                iconElementRight={<FlatButton label="delete" onClick={@showDeleteDialog} />}
+                iconElementRight={<FlatButton label="save" onClick={@_save} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
             />
             <Dialog
@@ -105,12 +108,12 @@ spinnerEditView = React.createClass
                 title={"Delete " + @props.model.get_curr_roulette().name + "?"}
                 actions={standardActions}
                 actionFocus="cancelRef"
-                modal={true}>
+            >
                 {"Are you sure you want to delete " + @props.model.get_curr_roulette().name + "? This action cannot be reversed!"}
             </Dialog>
 
             <br />  
-            <div className='container' id='spinner-tile-div'>
+            <div className='container' id='spinner-tile-div' style={height: '70%', overflow: 'auto'}>
                 <div className='row'>
                     <div className='col-sm-3'></div>
                     <div className='col-sm-6'>
@@ -126,12 +129,12 @@ spinnerEditView = React.createClass
                             label="Add"
                             onClick={@addTile}
                             primary={true}
-                            className='pull-down'
                             style={width: '100%'}
                         />
                     </div>
                     <div className='col-sm-3'></div>
                 </div>
+
                 <List subheader="Active Tiles">
                     <ListDivider />
                     {if @state.tileInput.length
@@ -162,6 +165,22 @@ spinnerEditView = React.createClass
                             />
                     }
                 </List>
+            </div>
+            <div className='footer navbar-fixed-bottom' style={zIndex: 0}>
+                <div className='container'>
+                    <RaisedButton
+                        label="Select New Image"
+                        onClick={''}
+                        default={true}
+                        style={width: '100%'}
+                    />
+                    <RaisedButton
+                        label="Delete Spinner"
+                        onClick={@showDeleteDialog}
+                        default={true}
+                        style={width: '100%', margin: '2%'}
+                    />
+                </div>
             </div>
         </div>
 

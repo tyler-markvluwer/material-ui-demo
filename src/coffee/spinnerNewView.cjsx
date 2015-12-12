@@ -104,11 +104,9 @@ spinnerNewView = React.createClass
 
     selectImage: (imgUrl) ->
         @state.saved_img = imgUrl
-        console.log "saving: " + @state.saved_img
         @update()
 
     save: () ->
-        console.log "saving"
         @state.currRoul.img = @state.saved_img
         @props.model.set_cur_view("SPINNER_EDIT")
 
