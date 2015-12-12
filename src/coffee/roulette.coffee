@@ -8,7 +8,6 @@ class Roulette extends EventEmitter
         @img = ''
 
     force_emit: () ->
-        console.log 'roulette force emit'
         @emit 'toggle'
 
     add_tile: (text, img) ->

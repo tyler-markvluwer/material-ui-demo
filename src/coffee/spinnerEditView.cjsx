@@ -21,10 +21,6 @@ spinnerEditView = React.createClass
     #       React Functions
     #################################
 
-    contextTouchTap: (e, item) ->
-        console.log e
-        console.log item
-
     componentDidMount: ->
         @props.model.on 'change', @update
 
@@ -40,13 +36,11 @@ spinnerEditView = React.createClass
     storeInput: () ->
         @state.tileInput = @refs.tileInput.getValue()
         @update()
-        console.log @state
 
     addTile: () ->
         if @state.tileInput.length
             @props.model.get_curr_roulette().add_tile(@state.tileInput, null)
-            console.log @props.model.get_curr_roulette()
-
+            
             @state.tileInput = ''
             @refs.tileInput.clearValue()
             @update()
@@ -63,7 +57,6 @@ spinnerEditView = React.createClass
 
     disableCallback: () ->
         @props.model.get_curr_roulette().disable_tile(@state.currRef)
-        console.log 'disable'
 
     editCallback: () ->
         @deleteCallback()
@@ -113,7 +106,7 @@ spinnerEditView = React.createClass
             </Dialog>
 
             <br />  
-            <div className='container' id='spinner-tile-div' style={height: '70%', overflow: 'auto'}>
+            <div className='container' id='spinner-tile-div' style={height: '70%', overflowY: 'auto'}>
                 <div className='row'>
                     <div className='col-sm-3'></div>
                     <div className='col-sm-6'>

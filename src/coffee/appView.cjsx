@@ -20,21 +20,6 @@ appView = React.createClass
     #       React Functions
     #################################
     componentDidMount: ->
-        @roulette_options = {
-            speed : 7
-            duration : 3
-            stopImageNumber : 1
-
-            # startCallback: () - >
-                # console.log('start')
-            slowDownCallback: () ->
-                console.log('slowDown');
-            stopCallback: ($stopElm) =>
-                console.log('stop');
-                @showSnack()
-        }
-
-        $('div.roulette').roulette(@roulette_options);
         @props.model.on 'change', @update
 
     update: ->
@@ -60,9 +45,6 @@ appView = React.createClass
             else alert("error, unknown index in leftNav")
 
     render: ->
-        console.log "disable edit? "
-        console.log(@props.model.get_curr_roulette()==null)
-        console.log @props.model.get_curr_roulette()
         menuItems = [
             { route: 'customization', text: 'Home', disabled: @props.model.get_curr_roulette()==null},
             { route: 'get-started', text: 'ShuffleIt!', disabled: @props.model.get_curr_roulette()==null},
