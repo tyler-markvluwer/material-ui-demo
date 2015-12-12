@@ -55,14 +55,20 @@ spinnerEditView = React.createClass
 
         @goToMain()
 
-    disableCallback: () ->
-        @props.model.get_curr_roulette().disable_tile(@state.currRef)
+    updateCallback: () ->
+        @props.model.get_curr_roulette().update_tile(@state.currRef)
 
-    editCallback: () ->
+    editActiveTileCallback: () ->
         @deleteCallback()
         @refs.tileInput.setValue(@state.currRef)
         @state.tileInput = @state.currRef
         @refs.tileInput.focus()
+
+    editInactiveTileCallback: () ->
+        @deleteCallback()
+        @refs.tileInput.setValue(@state.currRef)
+        @refs.tileInput.focus()
+        
 
     deleteCallback: () ->
         @props.model.get_curr_roulette().remove_tile(@state.currRef)
@@ -78,10 +84,17 @@ spinnerEditView = React.createClass
         @props.model.set_cur_view("SPINNER_SELECT")
 
     render: ->
-        rightIconMenu = (
+        rightIconMenuForActive = (
             <IconMenu iconButtonElement={iconButtonElement} >
-                <MenuItem onClick={@disableCallback}>Disable</MenuItem>
-                <MenuItem onClick={@editCallback}>Edit</MenuItem>
+                <MenuItem onClick={@updateCallback}>Disable</MenuItem>
+                <MenuItem onClick={@editActiveTileCallback}>Edit</MenuItem>
+                <MenuItem onClick={@deleteCallback}>Delete</MenuItem>
+            </IconMenu>
+        )
+        rightIconMenuForInactive = (
+            <IconMenu iconButtonElement={iconButtonElement} >
+                <MenuItem onClick={@updateCallback}>Enable</MenuItem>
+                <MenuItem onClick={@editInactiveTileCallback}>Edit</MenuItem>
                 <MenuItem onClick={@deleteCallback}>Delete</MenuItem>
             </IconMenu>
         )
@@ -141,7 +154,7 @@ spinnerEditView = React.createClass
                         if tile.active
                             <ListItem
                                 ref={tile.text}
-                                rightIconButton={rightIconMenu}
+                                rightIconButton={rightIconMenuForActive}
                                 primaryText={tile.text}
                                 onTouchTap={tile.toggleActive}
                                 onClick={@setCurrListItem.bind(this, tile.text)}
@@ -153,8 +166,11 @@ spinnerEditView = React.createClass
                     {for tile in @props.model.get_curr_roulette().get_tiles()
                         if not tile.active
                             <ListItem
+                                ref={tile.text}
+                                rightIconButton={rightIconMenuForInactive}
                                 primaryText={tile.text}
-                                onClick={tile.toggleActive}
+                                onTouchTap={tile.toggleActive}
+                                onClick={@setCurrListItem.bind(this, tile.text)}
                             />
                     }
                 </List>

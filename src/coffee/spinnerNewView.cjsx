@@ -22,6 +22,7 @@ spinnerNewView = React.createClass
         @refs.spinnerName.focus()
 
     update: ->
+        console.log "updating"
         @forceUpdate()
 
     getInitialState: ->
@@ -57,6 +58,7 @@ spinnerNewView = React.createClass
 
     getTags: () ->
         tags = @state.img_terms.split(' ')
+        console.log tags
         return tags.join()
 
     getApiUrl: () ->
@@ -64,6 +66,7 @@ spinnerNewView = React.createClass
         return url
 
     getImages: () ->
+        console.log "getting imgs"
         @state.imgs = []
         $.ajax(
             url: @getApiUrl()
@@ -94,6 +97,7 @@ spinnerNewView = React.createClass
                 if @secDiff(new Date(), @state.most_recent_action) > 1
                     if @state.img_terms.length
                         @getImages()
+                        console.log @state.img_terms
                 @state.most_recent_action = new Date()
             , 1500)
         
