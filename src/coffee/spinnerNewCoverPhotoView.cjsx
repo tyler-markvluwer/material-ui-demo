@@ -13,16 +13,15 @@ Star = require('material-ui/lib/svg-icons/toggle/star')
 API_KEY = "f8d1a0527ed82bd8587f5ec69886ba9c"
 NUM_PHOTOS = "10"
 
-spinnerNewView = React.createClass    
+spinnerNewCoverPhotoView = React.createClass    
     #################################
     #       React Functions
     #################################
     componentDidMount: ->
         @props.model.on 'change', @update
-        @refs.spinnerName.focus()
+        @refs.imageTerms.focus()
 
     update: ->
-        console.log "updating"
         @forceUpdate()
 
     getInitialState: ->
@@ -32,44 +31,13 @@ spinnerNewView = React.createClass
             imgs: []
             saved_img: ''
             most_recent_action: new Date()
-            tempName: ''
-            dialogHintText: 'Unique Spinner Name'
-            dialogHintStyle: {}
         }
-
-    _onDialogSubmit: ->
-        if not @state.tempName.length
-            @refs.spinnerName.focus()
-            return
-
-        if @props.model.roulette_name_exists(@state.tempName)
-            console.log "name in use"
-            @state.dialogHintStyle = {color: 'red'}
-            @setState({dialogHintText: 'Name already in use!'})
-            @refs.spinnerName.clearValue()
-            console.log @state.dialogHintStyle
-            return
-
-
-        @state.spinnerName = @state.tempName
-        @refs.nameDialog.dismiss()
-        @update()
-        @state.currRoul = new Roulette(@state.spinnerName)
-        @props.model.add_roulette(@state.currRoul)
-        @props.model.set_curr_roulette(@state.currRoul.name)
-        @refs.imageTerms.setValue(@state.spinnerName)
-        @_storeValue()
-        @refs.imageTerms.focus()
-
-    _storeName: ->
-        @state.tempName = @refs.spinnerName.getValue()
 
     getPhotoUrl: (photo) ->
         return "https://farm" + photo.farm + ".staticflickr.com/" + photo.server + "/" + photo.id + "_" + photo.secret + "_c.jpg";
 
     getTags: () ->
         tags = @state.img_terms.split(' ')
-        console.log tags
         return tags.join()
 
     getApiUrl: () ->
@@ -77,7 +45,6 @@ spinnerNewView = React.createClass
         return url
 
     getImages: () ->
-        console.log "getting imgs"
         @state.imgs = []
         $.ajax(
             url: @getApiUrl()
@@ -108,7 +75,6 @@ spinnerNewView = React.createClass
                 if @secDiff(new Date(), @state.most_recent_action) > 1
                     if @state.img_terms.length
                         @getImages()
-                        console.log @state.img_terms
                 @state.most_recent_action = new Date()
             , 1500)
         
@@ -118,22 +84,16 @@ spinnerNewView = React.createClass
         @update()
 
     save: () ->
-        @state.currRoul.img = @state.saved_img
+        @props.model.get_curr_roulette().img = @state.saved_img
         @props.model.set_cur_view("SPINNER_EDIT")
 
     cancelNew: ->
         @props.model.set_cur_view("SPINNER_SELECT")
-        @refs.nameDialog.dismiss()
 
     render: ->
-        standardActions = [
-          { text: 'Cancel', onTouchTap: @cancelNew},
-          { text: 'Submit', onTouchTap: @_onDialogSubmit, ref: 'submit' }
-        ]
-
         <div>
             <AppBar
-                title={@state.spinnerName}
+                title="Select Cover Image"
                 iconElementRight={<FlatButton label="save" onClick={@save} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
             />
@@ -141,23 +101,6 @@ spinnerNewView = React.createClass
             <div className='container'>
                 <TextField ref='imageTerms' floatingLabelText="Search for cover image" onChange={@_storeValue} />
             </div>
-            
-            <Dialog
-                ref='nameDialog'
-                title="Create New Spinner"
-                actions={standardActions}
-                actionFocus="submit"
-                modal=true
-                openImmediately=true
-            >
-                <TextField
-                    hintText={@state.dialogHintText}
-                    ref='spinnerName'
-                    onChange={@_storeName}
-                    hintStyle={@state.dialogHintStyle}
-                />
-                Choose a unique name for your new spinner!
-            </Dialog>
 
             <GridList
                 cellHeight={200}
@@ -184,4 +127,4 @@ spinnerNewView = React.createClass
             </GridList>
         </div>
 
-module.exports = React.createFactory(spinnerNewView)
+module.exports = React.createFactory(spinnerNewCoverPhotoView)
