@@ -1,5 +1,4 @@
 React = require('react')
-PlusButton = require('./plusButton')
 Resources = require('./resources')
 
 {AppBar, FlatButton, TextField, Dialog, RaisedButton, ActionGrade, ListDivider, List, ListItem, Paper, IconButton, Snackbar} = require('material-ui')
@@ -167,11 +166,12 @@ shuffleItView = React.createClass
                 <RaisedButton label="Login" primary={true} style={{width:'40%'}} />
             </div>
         ]
+        PlusButton = (<IconButton onClick={@addSpinner}><AddCircle /></IconButton>)
 
         <div>
             <AppBar
                 title={Resources.APP_NAME}
-                iconElementRight={<PlusButton click={@addSpinner} />}
+                iconElementRight={PlusButton}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
                 onRightIconButtonTouchTap={@addNewSpinner}
             />
