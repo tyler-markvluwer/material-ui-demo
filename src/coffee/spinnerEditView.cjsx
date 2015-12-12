@@ -33,6 +33,7 @@ spinnerEditView = React.createClass
         {
             tileInput: ''
             currRef: null
+            editState: true
         }
 
     storeInput: () ->
@@ -41,11 +42,12 @@ spinnerEditView = React.createClass
 
     addTile: () ->
         if @state.tileInput.length
-            @props.model.get_curr_roulette().add_tile(@state.tileInput, null)
+            @props.model.get_curr_roulette().add_tile(@state.tileInput, null, @state.editState)
             
             @state.tileInput = ''
             @refs.tileInput.clearValue()
             @update()
+        @state.editState = true
 
     goToMain: () ->
         @props.model.set_cur_view("SPINNER_MAIN")
@@ -67,9 +69,12 @@ spinnerEditView = React.createClass
         @refs.tileInput.focus()
 
     editInactiveTileCallback: () ->
+        @state.editState = false
         @deleteCallback()
         @refs.tileInput.setValue(@state.currRef)
+        @state.tileInput = @state.currRef
         @refs.tileInput.focus()
+
         
 
     deleteCallback: () ->

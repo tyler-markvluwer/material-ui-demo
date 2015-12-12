@@ -10,8 +10,8 @@ class Roulette extends EventEmitter
     force_emit: () ->
         @emit 'toggle'
 
-    add_tile: (text, img) ->
-        tile = new Tile(text, img)
+    add_tile: (text, img, active) ->
+        tile = new Tile(text, img, active)
         @tiles.push tile
         tile.on 'tile-toggle', @force_emit
 
