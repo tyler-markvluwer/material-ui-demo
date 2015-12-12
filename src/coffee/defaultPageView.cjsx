@@ -140,16 +140,14 @@ defaultPageView = React.createClass
             <Dialog
                 actions={customActions}
                 actionFocus="submit"
-                modal={true}
-                openImmediately={false}>
+            >
             </Dialog>
 
             <Dialog
                 ref='selectionDialog'
                 title="You've Made a Decision!"
                 actions={standardActions}
-                actionFocus="submit"
-                modal={true}>
+                actionFocus="submit">
                 {"Congrats on choosing " + @state.current_tile.text + "! If you are unhappy with selection click 'Try Again'!"}
             </Dialog>
 

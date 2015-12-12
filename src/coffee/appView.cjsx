@@ -4,6 +4,7 @@ SpinnerTileView = require('./spinnerTileView')
 SpinnerEditView = require('./spinnerEditView')
 SpinnerNewView = require('./spinnerNewView')
 Globals = require('./globals')
+Resources = require('./resources')
 
 Mui = require('material-ui')
 {MenuItem, LeftNav, Snackbar} = require('material-ui')
@@ -87,23 +88,23 @@ appView = React.createClass
 
         <div className='app-div' id='awesome-441-app-div'>
             {switch @props.model.get_curr_view()
-                when "SPINNER_MAIN"
+                when Resources.SPIN_VIEW
                     <DefaultPageView
                         model={@props.model}
                         snack_show={@showSnack}
                         toggleLeft={@toggleLeft}
                     />
-                when "SPINNER_SELECT"
+                when Resources.SELECT_VIEW
                     <SpinnerTileView
                         model={@props.model}
                         toggleLeft={@toggleLeft}
                     />
-                when "SPINNER_EDIT"
+                when Resources.EDIT_VIEW
                     <SpinnerEditView
                         model={@props.model}
                         toggleLeft={@toggleLeft}
                     />
-                when "SPINNER_NEW"
+                when Resources.NEW_VIEW
                     <SpinnerNewView
                         model={@props.model}
                         toggleLeft={@toggleLeft}
