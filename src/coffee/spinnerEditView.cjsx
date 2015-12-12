@@ -112,24 +112,25 @@ spinnerEditView = React.createClass
             <br />  
             <div className='container' id='spinner-tile-div'>
                 <div className='row'>
-                    <div className='col-sm-3'>
+                    <div className='col-sm-3'></div>
+                    <div className='col-sm-6'>
                         <TextField
                             ref='tileInput'
                             hintText="e.g. Pizza"
                             floatingLabelText="Add New Tile"
                             onChange={@storeInput}
                             onEnterKeyDown={@addTile}
+                            style={width: '100%'}
                         />
-                    </div>
-                    <div className='col-sm-3'>
                         <RaisedButton
                             label="Add"
                             onClick={@addTile}
-                            primary={true} />
+                            primary={true}
+                            className='pull-down'
+                            style={width: '100%'}
+                        />
                     </div>
-                    <div className='col-sm-3'>
-                        
-                    </div>
+                    <div className='col-sm-3'></div>
                 </div>
                 <List subheader="Active Tiles">
                     <ListDivider />
