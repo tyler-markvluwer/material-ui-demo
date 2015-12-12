@@ -2,7 +2,7 @@ Tile = require('./tile')
 EventEmitter = require('events').EventEmitter # used to tell UI when to update
 
 
-class Roulette extends EventEmitter
+class Roulette extends EventEmitter 
     constructor: (@name) ->
         @tiles = []
         @img = ''
@@ -26,7 +26,7 @@ class Roulette extends EventEmitter
     remove_tile: (text) ->
         @tiles = (tile for tile in @tiles when tile.text != text)
 
-    disable_tile: (text) ->
+    update_tile: (text) ->
         (tile.toggleActive() for tile in @tiles when tile.text == text)
 
     get_tiles: () ->
