@@ -82,12 +82,16 @@ spinnerEditView = React.createClass
     _gotoSelectImgView: () ->
         @props.model.set_cur_view(Resources.NEW_COVER_PHOTO_VIEW)
 
+    _onContextMenuItemTouchTap: (event, item) ->
+        console.log event
+        console.log item
+
     render: ->
         rightIconMenu = (
-            <IconMenu iconButtonElement={iconButtonElement} >
-                <MenuItem onClick={@disableCallback}>Disable</MenuItem>
-                <MenuItem onClick={@editCallback}>Edit</MenuItem>
-                <MenuItem onClick={@deleteCallback}>Delete</MenuItem>
+            <IconMenu iconButtonElement={iconButtonElement} onItemTouchTap={@_onContextMenuItemTouchTap} >
+                <MenuItem >Disable</MenuItem>
+                <MenuItem >Edit</MenuItem>
+                <MenuItem >Delete</MenuItem>
             </IconMenu>
         )
         standardActions = [
@@ -111,7 +115,7 @@ spinnerEditView = React.createClass
             </Dialog>
 
             <br />  
-            <div className='container' id='spinner-tile-div' style={height: '70%', overflowY: 'auto'}>
+            <div className='container' id='spinner-tile-div' style={height: '70%', overflowY: 'auto', overflowX: 'hidden'}>
                 <div className='row'>
                     <div className='col-sm-3'></div>
                     <div className='col-sm-6'>
