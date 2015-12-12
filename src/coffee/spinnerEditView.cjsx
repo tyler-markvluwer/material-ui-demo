@@ -50,7 +50,7 @@ spinnerEditView = React.createClass
         @state.editState = true
 
     goToMain: () ->
-        @props.model.set_cur_view("SPINNER_MAIN")
+        @props.model.set_cur_view(Resources.SELECT_VIEW)
 
     _deleteSpinner: () ->
         curr_name = @props.model.get_curr_roulette().name
