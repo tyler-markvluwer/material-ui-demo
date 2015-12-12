@@ -53,11 +53,9 @@ class Model extends EventEmitter
     add_roulette: (roul) ->
         @rouls.push roul
         last = @rouls[-1..][0]
-        console.log last.name
         last.on 'toggle', @toggle_emit
 
     toggle_emit: () ->
-        console.log 'force emitting'
         @emit 'toggle'
 
     get_curr_photo: () ->

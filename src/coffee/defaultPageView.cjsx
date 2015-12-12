@@ -28,7 +28,6 @@ defaultPageView = React.createClass
         }
 
     transitionCircleColor: (color, textColor, callback) ->
-        console.log "transitioning color"
         $("#answer-circle").css("background-image", "")
         $("#answer-circle").animate(
             {
@@ -106,7 +105,7 @@ defaultPageView = React.createClass
             }
           })
         }, (response) ->
-          console.log(response)
+          # console.log(response)
         )
 
     render: ->
