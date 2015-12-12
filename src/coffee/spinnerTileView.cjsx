@@ -1,5 +1,4 @@
 React = require('react')
-PlusButton = require('./plusButton')
 
 {AppBar, FlatButton, GridList, GridTile, IconButton} = require('material-ui')
 StarBorder = require('material-ui/lib/svg-icons/toggle/star-border')
@@ -23,11 +22,12 @@ spinnerTileView = React.createClass
         @props.model.set_cur_view("SPINNER_NEW")
 
     render: ->
+        PlusButton = (<IconButton onClick={@addSpinner}><AddCircle /></IconButton>)
+
         <div>
-            
             <AppBar
                 title='All Spinners'
-                iconElementRight={<PlusButton click={@addSpinner} />}
+                iconElementRight={PlusButton}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
             />
             <GridList
