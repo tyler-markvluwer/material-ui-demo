@@ -195,18 +195,31 @@ spinnerEditView = React.createClass
             </div>
             <div className='footer navbar-fixed-bottom' style={zIndex: 0}>
                 <div className='container'>
-                    <RaisedButton
-                        label="Select New Image"
-                        onClick={@_gotoSelectImgView}
-                        default={true}
-                        style={width: '100%'}
-                    />
-                    <RaisedButton
-                        label="Delete Spinner"
-                        onClick={@showDeleteDialog}
-                        default={true}
-                        style={width: '100%', margin: '2%'}
-                    />
+                    <div className='row'>
+                        <div className='col-sm-12 col-centered'>
+                            <RaisedButton
+                                label="Select New Image"
+                                onClick={@_gotoSelectImgView}
+                                secondary={true}
+                                style={width: '25%'}
+                            />
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className='col-sm-12 col-centered'>
+                            <RaisedButton
+                                id='delete-spinner-button'
+                                label="Delete Spinner"
+                                onClick={@showDeleteDialog}
+                                default={true}
+                                backgroundColor={Colors.red500}
+                                hoverColor={Colors.red100}
+                                rippleColor={Colors.red100}
+                                labelColor='white'
+                                style={width: '25%', marginTop: '1%', marginBottom: '2%'}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
