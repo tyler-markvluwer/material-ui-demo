@@ -33,6 +33,7 @@ appView = React.createClass
         @refs.leftNav.toggle()
 
     menuOnChange: (event, index, menuItem) ->
+        console.log index
         switch index
             when 0 then @props.model.set_cur_view("SPINNER_SELECT") # TODO fix hardcode
             when 1 then @props.model.set_cur_view("SPINNER_MAIN") # TODO fix hardcode, shuffleIt
@@ -40,7 +41,7 @@ appView = React.createClass
                 if @props.model.get_curr_roulette()
                     @props.model.set_cur_view("SPINNER_EDIT") # TODO fix hardcode
             when 3 then @props.model.set_cur_view("SPINNER_NEW") # TODO fix hardcode
-            else alert("error, unknown index in leftNav")
+            when 5 then window.location.href = "http://www-personal.umich.edu/~tylermar/how-to/";
 
     render: ->
         menuItems = [
@@ -55,9 +56,10 @@ appView = React.createClass
             #    text: 'GitHub'
             # },
             {
-               type: MenuItem.Types.LINK,
+               #type: MenuItem.Types.LINK,
+               linkButtton: true,
                text: 'How To',
-               payload: '/~tylermar/how-to/',
+               href: 'http://www-personal.umich.edu/~tylermar/how-to/',
             },
             # {
             #    type: MenuItem.Types.LINK,
