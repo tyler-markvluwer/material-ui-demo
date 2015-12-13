@@ -3,6 +3,19 @@ React = require('react')
 {AppBar, FlatButton, GridList, GridTile, IconButton, Paper} = require('material-ui')
 StarBorder = require('material-ui/lib/svg-icons/toggle/star-border')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
+IconMenu = require('material-ui/lib/menus/icon-menu')
+MenuItem = require('material-ui/lib/menus/menu-item')
+MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
+Colors = require('material-ui/lib/styles/colors')
+
+iconButtonElement = (
+  <IconButton
+    touch={true}
+    tooltip="more"
+    tooltipPosition="bottom-right">
+    <MoreVertIcon color={"white"} />
+  </IconButton>
+)
 
 spinnerTileView = React.createClass    
     #################################
@@ -14,6 +27,15 @@ spinnerTileView = React.createClass
     update: ->
         @forceUpdate()
 
+    getInitialState: ->
+        {
+            curr_roul: null
+        }
+
+    updateCurrRoul: (name) ->
+        console.log "curr_roul: " + name
+        @setState({curr_roul: name})
+
     activateRoulette: (name) ->
         @props.model.set_curr_roulette(name)
         @props.model.set_cur_view("SPINNER_MAIN")
@@ -21,9 +43,25 @@ spinnerTileView = React.createClass
     addSpinner: () ->
         @props.model.set_cur_view("SPINNER_NEW")
 
+    _menuItemTouchTap: (event, value) ->
+
+        switch value
+            when 'ShuffleIt'
+                @props.model.set_curr_roulette(@state.curr_roul)
+                @props.model.set_cur_view("SPINNER_MAIN")
+            when 'Edit Spinner'
+                @props.model.set_curr_roulette(@state.curr_roul)
+                @props.model.set_cur_view("SPINNER_EDIT")
+
+
     render: ->
         PlusButton = (<IconButton onClick={@addSpinner}><AddCircle /></IconButton>)
-
+        rightIconMenu = (
+            <IconMenu iconButtonElement={iconButtonElement} onChange={@_menuItemTouchTap} openDirection = "top-left">
+                <MenuItem value='ShuffleIt'>ShuffleIt</MenuItem>
+                <MenuItem value='Edit Spinner'>Edit Spinner</MenuItem>
+            </IconMenu>
+        )
         <div>
             <AppBar
                 title='All Spinners'
@@ -32,7 +70,7 @@ spinnerTileView = React.createClass
             />
 
             {if @props.model.get_roulettes().length
-                <GridList
+                <GridList 
                     cellHeight={200}
                     style={{width: '100%', overflowY: 'auto', marginLeft: '0px'}}
                 >
@@ -40,8 +78,8 @@ spinnerTileView = React.createClass
                     <GridTile
                         title={roul.name}
                         subtitle={<span>by <b>demo user</b></span>}
-                        actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
-                        onClick={@activateRoulette.bind(this, roul.name)}
+                        actionIcon={rightIconMenu}
+                        onClick={@updateCurrRoul.bind(this, roul.name)}
                     >
                         <img src={roul.cover_photo_url()} />
                     </GridTile>
