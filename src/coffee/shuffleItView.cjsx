@@ -7,7 +7,7 @@ StarIcon = require('material-ui/lib/svg-icons/action/grade')
 Colors = require('material-ui/lib/styles/colors')
 
 FADE_OUT_TIME = 1000
-FADE_IN_TIME = 3000
+FADE_IN_TIME = 2000
 
 shuffleItView = React.createClass    
     #################################
