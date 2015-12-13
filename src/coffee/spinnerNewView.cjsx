@@ -33,23 +33,12 @@ spinnerNewView = React.createClass
             saved_img: ''
             most_recent_action: new Date()
             tempName: ''
-            dialogHintText: 'Unique Spinner Name'
-            dialogHintStyle: {}
         }
 
     _onDialogSubmit: ->
         if not @state.tempName.length
             @refs.spinnerName.focus()
             return
-
-        if @props.model.roulette_name_exists(@state.tempName)
-            console.log "name in use"
-            @state.dialogHintStyle = {color: 'red'}
-            @setState({dialogHintText: 'Name already in use!'})
-            @refs.spinnerName.clearValue()
-            console.log @state.dialogHintStyle
-            return
-
 
         @state.spinnerName = @state.tempName
         @refs.nameDialog.dismiss()
@@ -150,12 +139,7 @@ spinnerNewView = React.createClass
                 modal=true
                 openImmediately=true
             >
-                <TextField
-                    hintText={@state.dialogHintText}
-                    ref='spinnerName'
-                    onChange={@_storeName}
-                    hintStyle={@state.dialogHintStyle}
-                />
+                <TextField hintText="Spinner Name" ref='spinnerName' onChange={@_storeName} />
                 Choose a unique name for your new spinner!
             </Dialog>
 
@@ -166,16 +150,14 @@ spinnerNewView = React.createClass
             {for img in @state.imgs
                 if img != @state.saved_img
                     <GridTile
-                        title="test"
-                        subtitle={<span>by <b>author_here</b></span>}
+                        title=" "
                         actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
                         onClick={@selectImage.bind(this, img)}
                     >
                     <img src={img} /></GridTile>
                 else
                     <GridTile
-                        title="test"
-                        subtitle={<span>by <b>author_here</b></span>}
+                        title=" "
                         actionIcon={<IconButton><Star color="red"/></IconButton>}
                         onClick={@selectImage.bind(this, img)}
                     >

@@ -7,9 +7,9 @@ StarIcon = require('material-ui/lib/svg-icons/action/grade')
 Colors = require('material-ui/lib/styles/colors')
 
 FADE_OUT_TIME = 1000
-FADE_IN_TIME = 3000
+FADE_IN_TIME = 2000
 
-defaultPageView = React.createClass    
+shuffleItView = React.createClass    
     #################################
     #       React Functions
     #################################
@@ -20,11 +20,18 @@ defaultPageView = React.createClass
         @forceUpdate()
 
     getInitialState: ->
-        {
-            current_index: 0
-            current_tile: {text: 'default_tile_value'}
-            curr_text: ''
-        }
+        if @props.model.get_roulettes().length == 0
+            {
+                current_index: 0
+                current_tile: {text: 'default_tile_value'}
+                curr_text: 'No Spinners'
+            }
+        else
+            {
+                current_index: 0
+                current_tile: {text: 'default_tile_value'}
+                curr_text: ''
+            }
 
     transitionCircleColor: (color, textColor, callback) ->
         $("#answer-circle").css("background-image", "")
@@ -42,8 +49,12 @@ defaultPageView = React.createClass
                 callback()
         )
 
-    setRandomTile: () ->
+    setRandomTile: () -> 
         max = @props.model.get_curr_roulette().get_active_tiles().length - 1
+        if max < 0
+            @state.current_tile = {text: "No tiles to shuffle!"}
+            return @state.current_tile.text
+
         min = 0
         index = Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -64,13 +75,30 @@ defaultPageView = React.createClass
         @props.model.set_cur_view("SPINNER_NEW")
 
     animateClick: ->
+        if @props.model.get_roulettes().length == 0
+            @state.curr_text = ' '
+            @transitionCircleColor(Colors.cyan500, "white")
+            $('#answer-box').fadeOut(FADE_OUT_TIME, () =>
+                $('#answer-box').text("No Spinners...").fadeIn(FADE_IN_TIME).fadeOut(FADE_OUT_TIME, () =>
+                    @transitionCircleColor(Colors.yellow400, Colors.cyan500, () =>
+                        $('#answer-box').text("No Spinners").fadeIn(FADE_IN_TIME, () =>
+                            @refs.noSpinners.show()
+                        )
+                    )
+                )
+            )
+            return
+
         @transitionCircleColor(Colors.cyan500, "white")
         $('#answer-box').fadeOut(FADE_OUT_TIME, () =>
             @setRandomTile()
             $('#answer-box').text("Deciding...").fadeIn(FADE_IN_TIME).fadeOut(FADE_OUT_TIME, () =>
                 @transitionCircleColor(Colors.yellow400, Colors.cyan500, () =>
                     $('#answer-box').text(@state.current_tile.text).fadeIn(FADE_IN_TIME, () =>
-                        @refs.selectionDialog.show()
+                        if @props.model.get_curr_roulette().get_active_tiles().length - 1 < 0
+                            @refs.noTiles.show()
+                        else
+                            @refs.selectionDialog.show()
                     )
                 )
             )
@@ -85,6 +113,12 @@ defaultPageView = React.createClass
 
     _onDialogSubmit: ->
         @refs.selectionDialog.dismiss()
+
+    _onNoSpinnerDialogSubmit: ->
+        @refs.noSpinners.dismiss()
+
+    _onNoTilesDialogSubmit: ->
+        @refs.noTiles.dismiss()
 
     _getName: ->
         FB.api('/me', (response) ->
@@ -115,6 +149,12 @@ defaultPageView = React.createClass
         standardActions = [
           { text: 'Share', onTouchTap: @_shareResult, ref: 'share' },
           { text: 'Try Again', onTouchTap: @_onDialogSubmit, ref: 'submit' }
+        ]
+        noSpinnersAction = [
+            { text: 'Got it!', onTouchTap: @_onNoSpinnerDialogSubmit, ref: 'submit' }
+        ]
+        noTilesAction = [
+            { text: 'Got it!', onTouchTap: @_onNoTilesDialogSubmit, ref: 'submit' }
         ]
         customActions = [
             <div>
@@ -149,6 +189,23 @@ defaultPageView = React.createClass
                 actionFocus="submit">
                 {"Congrats on choosing " + @state.current_tile.text + "! If you are unhappy with selection click 'Try Again'!"}
             </Dialog>
+            <Dialog
+                ref='noSpinners'
+                title="You've no spinners."
+                actions={noSpinnersAction}
+                actionFocus="submit">
+                {"Add a spinner so you can ShuffleIt!"}
+            </Dialog>
+
+            {if @props.model.get_roulettes().length
+                <Dialog
+                    ref='noTiles'
+                    title="You've no tiles."
+                    actions={noTilesAction}
+                    actionFocus="submit">
+                    {"You should add or activate tiles for " + @props.model.get_curr_roulette().name + " so you can ShuffleIt!"}
+                </Dialog>
+            }
 
             <br />  
             <div className="container">
@@ -180,4 +237,4 @@ defaultPageView = React.createClass
             </div>
         </div>
 
-module.exports = React.createFactory(defaultPageView)
+module.exports = React.createFactory(shuffleItView)
