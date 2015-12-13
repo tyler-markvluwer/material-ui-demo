@@ -68,9 +68,6 @@ shuffleItView = React.createClass
     spinRoulette: ->
         $('div.roulette').roulette('start')
 
-    showSnack: ->
-        @props.snack_show()
-
     addSpinner: () ->
         @props.model.set_cur_view("SPINNER_NEW")
 

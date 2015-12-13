@@ -32,9 +32,6 @@ appView = React.createClass
     toggleLeft: ->
         @refs.leftNav.toggle()
 
-    showSnack: ->
-        @refs.snack.show()
-
     menuOnChange: (event, index, menuItem) ->
         switch index
             when 0 then @props.model.set_cur_view("SPINNER_SELECT") # TODO fix hardcode
@@ -51,15 +48,16 @@ appView = React.createClass
             { route: 'get-started', text: 'ShuffleIt!', disabled: @props.model.get_curr_roulette()==null},
             { route: 'components', text: 'Edit Spinner', disabled: @props.model.get_curr_roulette()==null},
             { route: 'new-spinner', text: 'Add Spinner'},
-            { type: MenuItem.Types.SUBHEADER, text: 'User Options' },
+            { type: MenuItem.Types.SUBHEADER, text: 'Meta' },
             # {
             #    type: MenuItem.Types.LINK,
             #    payload: 'https://github.com/callemall/material-ui',
             #    text: 'GitHub'
             # },
             {
-               text: 'Login',
-               disabled: true
+               type: MenuItem.Types.LINK,
+               text: 'How To',
+               payload: '/~tylermar/how-to/',
             },
             # {
             #    type: MenuItem.Types.LINK,
@@ -74,7 +72,6 @@ appView = React.createClass
                 when Resources.SPIN_VIEW
                     <ShuffleItView
                         model={@props.model}
-                        snack_show={@showSnack}
                         toggleLeft={@toggleLeft}
                     />
                 when Resources.SELECT_VIEW
@@ -100,13 +97,6 @@ appView = React.createClass
                 else alert("error, unknown current view")
             }
             <LeftNav ref="leftNav" docked={false} menuItems={menuItems} onChange={@menuOnChange} />
-            <Snackbar
-                ref='snack'
-                message="You Chose Something!"
-                action="undo"
-                openOnMount=false
-                autoHideDuration={4000}
-                onActionTouchTap={@toggleLeft}/>
         </div>
 
 module.exports = React.createFactory(appView)
