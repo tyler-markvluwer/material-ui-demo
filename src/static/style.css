@@ -1,0 +1,10 @@
+.col-centered{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#delete-spinner-button:hover{
+	background-color: #FFCDD2;
+}
