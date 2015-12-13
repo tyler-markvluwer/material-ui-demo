@@ -41,12 +41,12 @@ spinnerEditView = React.createClass
         @update()
 
     addTile: () ->
-        if @state.tileInput.length
+        if @state.tileInput.length and not @props.model.get_curr_roulette().get_tile(@state.tileInput)
             @props.model.get_curr_roulette().add_tile(@state.tileInput, null, @state.editState)
-            
             @state.tileInput = ''
             @refs.tileInput.clearValue()
             @update()
+
         @state.editState = true
 
     goToMain: () ->
