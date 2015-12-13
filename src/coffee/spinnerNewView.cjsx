@@ -150,16 +150,14 @@ spinnerNewView = React.createClass
             {for img in @state.imgs
                 if img != @state.saved_img
                     <GridTile
-                        title="test"
-                        subtitle={<span>by <b>author_here</b></span>}
+                        title=" "
                         actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
                         onClick={@selectImage.bind(this, img)}
                     >
                     <img src={img} /></GridTile>
                 else
                     <GridTile
-                        title="test"
-                        subtitle={<span>by <b>author_here</b></span>}
+                        title=" "
                         actionIcon={<IconButton><Star color="red"/></IconButton>}
                         onClick={@selectImage.bind(this, img)}
                     >
