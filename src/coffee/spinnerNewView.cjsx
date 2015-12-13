@@ -33,6 +33,7 @@ spinnerNewView = React.createClass
             saved_img: ''
             most_recent_action: new Date()
             tempName: ''
+            img_selected: false
         }
 
     _onDialogSubmit: ->
@@ -103,12 +104,16 @@ spinnerNewView = React.createClass
         
 
     selectImage: (imgUrl) ->
+        @setState({img_selected: true})
         @state.saved_img = imgUrl
         @update()
 
     save: () ->
-        @state.currRoul.img = @state.saved_img
-        @props.model.set_cur_view("SPINNER_EDIT")
+        if @state.img_selected
+            @state.currRoul.img = @state.saved_img
+            @props.model.set_cur_view("SPINNER_EDIT")
+        else
+            @refs.saveSnackbar.show()
 
     cancelNew: ->
         @props.model.set_cur_view("SPINNER_SELECT")
@@ -125,6 +130,11 @@ spinnerNewView = React.createClass
                 title={@state.spinnerName}
                 iconElementRight={<FlatButton label="save" onClick={@save} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
+            />
+            <Snackbar
+                ref='saveSnackbar'
+                message="You must select an image to save!"
+                autoHideDuration={4000}
             />
             <br />
             <div className='container'>

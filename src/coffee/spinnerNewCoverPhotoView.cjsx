@@ -31,6 +31,7 @@ spinnerNewCoverPhotoView = React.createClass
             imgs: []
             saved_img: ''
             most_recent_action: new Date()
+            img_selected: false
         }
 
     getPhotoUrl: (photo) ->
@@ -80,15 +81,19 @@ spinnerNewCoverPhotoView = React.createClass
         
 
     selectImage: (imgUrl) ->
+        @setState({img_selected: true})
         @state.saved_img = imgUrl
         @update()
 
     save: () ->
-        @props.model.get_curr_roulette().img = @state.saved_img
-        @props.model.set_cur_view("SPINNER_EDIT")
+        if @state.img_selected
+            @props.model.get_curr_roulette().img = @state.saved_img
+            @props.model.set_cur_view("SPINNER_EDIT")
+        else
+            @refs.saveSnackbar.show()
 
-    cancelNew: ->
-        @props.model.set_cur_view("SPINNER_SELECT")
+    _cancelCallback: ->
+        @props.model.set_cur_view('SPINNER_EDIT')
 
     render: ->
         <div>
@@ -96,6 +101,11 @@ spinnerNewCoverPhotoView = React.createClass
                 title="Select Cover Image"
                 iconElementRight={<FlatButton label="save" onClick={@save} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
+            />
+            <Snackbar
+                ref='saveSnackbar'
+                message="You must select an image to save!"
+                autoHideDuration={4000}
             />
             <br />
             <div className='container'>
@@ -123,6 +133,20 @@ spinnerNewCoverPhotoView = React.createClass
                     <img src={img} /></GridTile>
             }
             </GridList>
+            <div className='footer navbar-fixed-bottom' style={zIndex: 0}>
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-sm-12 col-centered'>
+                            <RaisedButton
+                                label="Cancel"
+                                onClick={@_cancelCallback}
+                                primary={true}
+                                style={width: '25%', marginBottom: '2%'}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 module.exports = React.createFactory(spinnerNewCoverPhotoView)

@@ -5,6 +5,7 @@ Resources = require('./resources')
 
 MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
+
 IconMenu = require('material-ui/lib/menus/icon-menu')
 MenuItem = require('material-ui/lib/menus/menu-item')
 Colors = require('material-ui/lib/styles/colors')
@@ -86,8 +87,8 @@ spinnerEditView = React.createClass
     showDeleteDialog: () ->
         @refs.deleteDialog.show()
 
-    _save: () ->
-        @props.model.set_cur_view(Resources.SELECT_VIEW)
+    # _save: () ->
+    #     @props.model.set_cur_view(Resources.SELECT_VIEW)
 
     _gotoSelectImgView: () ->
         @props.model.set_cur_view(Resources.NEW_COVER_PHOTO_VIEW)
@@ -127,7 +128,6 @@ spinnerEditView = React.createClass
         <div>
             <AppBar
                 title={ @props.model.get_curr_roulette().name}
-                iconElementRight={<FlatButton label="save" onClick={@_save} />}
                 onLeftIconButtonTouchTap={@props.toggleLeft}
             />
             <Dialog
