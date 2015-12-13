@@ -12,7 +12,7 @@ iconButtonElement = (
   <IconButton
     touch={true}
     tooltip="more"
-    tooltipPosition="bottom-right">
+    tooltipPosition="top-left">
     <MoreVertIcon color={"white"} />
   </IconButton>
 )
