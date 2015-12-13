@@ -5,7 +5,6 @@ Resources = require('./resources')
 
 MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
-Camera = require('material-ui/lib/svg-icons/image/camera')
 IconMenu = require('material-ui/lib/menus/icon-menu')
 MenuItem = require('material-ui/lib/menus/menu-item')
 Colors = require('material-ui/lib/styles/colors')
@@ -175,7 +174,6 @@ spinnerEditView = React.createClass
                     {for tile in @props.model.get_curr_roulette().get_tiles()
                         if tile.active
                             <ListItem
-                                ref={tile.text}
                                 rightIconButton={rightIconMenuForActive}
                                 primaryText={tile.text}
                                 onTouchTap={tile.toggleActive}
@@ -188,7 +186,6 @@ spinnerEditView = React.createClass
                     {for tile in @props.model.get_curr_roulette().get_tiles()
                         if not tile.active
                             <ListItem
-                                ref={tile.text}
                                 rightIconButton={rightIconMenuForInactive}
                                 primaryText={tile.text}
                                 onTouchTap={tile.toggleActive}

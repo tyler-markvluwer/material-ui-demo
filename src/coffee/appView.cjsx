@@ -38,7 +38,7 @@ appView = React.createClass
     menuOnChange: (event, index, menuItem) ->
         switch index
             when 0 then @props.model.set_cur_view("SPINNER_SELECT") # TODO fix hardcode
-            when 1 then @props.model.set_cur_view("SPINNER_MAIN") # TODO fix hardcode
+            when 1 then @props.model.set_cur_view("SPINNER_MAIN") # TODO fix hardcode, shuffleIt
             when 2
                 if @props.model.get_curr_roulette()
                     @props.model.set_cur_view("SPINNER_EDIT") # TODO fix hardcode
