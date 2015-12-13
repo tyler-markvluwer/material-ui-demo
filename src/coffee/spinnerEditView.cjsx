@@ -1,13 +1,15 @@
 React = require('react')
 Resources = require('./resources')
 
-{AppBar, Dialog, Checkbox, TextField, IconButton, FlatButton, RaisedButton, ListDivider, List, ListItem, Snackbar} = require('material-ui')
+{AppBar, Dialog, Checkbox, TextField, IconButton, FontIcon, FlatButton, RaisedButton, ListDivider, List, ListItem, Snackbar} = require('material-ui')
 
 MoreVertIcon = require('material-ui/lib/svg-icons/navigation/more-vert')
 AddCircle = require('material-ui/lib/svg-icons/content/add')
-IconMenu = require('material-ui/lib/menus/icon-menu');
-MenuItem = require('material-ui/lib/menus/menu-item');
+Camera = require('material-ui/lib/svg-icons/image/camera')
+IconMenu = require('material-ui/lib/menus/icon-menu')
+MenuItem = require('material-ui/lib/menus/menu-item')
 Colors = require('material-ui/lib/styles/colors')
+styles = require('material-ui/lib/styles')
 
 iconButtonElement = (
   <IconButton
@@ -200,6 +202,7 @@ spinnerEditView = React.createClass
                     <div className='row'>
                         <div className='col-sm-12 col-centered'>
                             <RaisedButton
+                                secondary={true}
                                 label="Select New Image"
                                 onClick={@_gotoSelectImgView}
                                 secondary={true}
