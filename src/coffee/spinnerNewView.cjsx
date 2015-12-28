@@ -41,6 +41,11 @@ spinnerNewView = React.createClass
             @refs.spinnerName.focus()
             return
 
+        if @props.model.roulette_name_exists(@state.tempName)
+            @refs.spinnerName.setValue("Spinner name already exists")
+            @refs.spinnerName.focus()
+            return
+
         @state.spinnerName = @state.tempName
         @refs.nameDialog.dismiss()
         @update()
