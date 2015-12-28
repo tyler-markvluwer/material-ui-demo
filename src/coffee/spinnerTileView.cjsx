@@ -35,6 +35,7 @@ spinnerTileView = React.createClass
     updateCurrRoul: (name) ->
         console.log "curr_roul: " + name
         @setState({curr_roul: name})
+        return false
 
     activateRoulette: (name) ->
         @props.model.set_curr_roulette(name)
