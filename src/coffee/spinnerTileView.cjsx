@@ -53,11 +53,13 @@ spinnerTileView = React.createClass
                 @props.model.set_curr_roulette(@state.curr_roul)
                 @props.model.set_cur_view("SPINNER_EDIT")
 
+        return false
+
 
     render: ->
         PlusButton = (<IconButton onClick={@addSpinner}><AddCircle /></IconButton>)
         rightIconMenu = (
-            <IconMenu iconButtonElement={iconButtonElement} onChange={@_menuItemTouchTap} openDirection = "top-left">
+            <IconMenu iconButtonElement={iconButtonElement} onChange={@_menuItemTouchTap} openDirection="top-left">
                 <MenuItem value='ShuffleIt'>ShuffleIt</MenuItem>
                 <MenuItem value='Edit Spinner'>Edit Spinner</MenuItem>
             </IconMenu>
