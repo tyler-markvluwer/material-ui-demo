@@ -203,7 +203,7 @@ spinnerEditView = React.createClass
                                 label="Select New Image"
                                 onClick={@_gotoSelectImgView}
                                 secondary={true}
-                                style={width: '25%'}
+                                style={minWidth: '25%'}
                             />
                         </div>
                     </div>
@@ -218,7 +218,7 @@ spinnerEditView = React.createClass
                                 hoverColor={Colors.red100}
                                 rippleColor={Colors.red100}
                                 labelColor='white'
-                                style={width: '25%', marginTop: '1%', marginBottom: '2%'}
+                                style={minWidth: '25%', marginTop: '1%', marginBottom: '2%'}
                             />
                         </div>
                     </div>
